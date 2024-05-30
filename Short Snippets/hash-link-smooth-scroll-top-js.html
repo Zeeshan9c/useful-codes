@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script src="../dep/jQuery.js"></script>
+    <script>
+
+		var adminbar = 0;
+		if ($('#wpadminbar').length) {
+			adminbar = $('#wpadminbar').height();
+		}
+
+        //smoothscroll
+		$('a[href^= "#"]:not(.skip-main, .offers-slider-wrapper)').on('click', function (x) {
+			x.stopImmediatePropagation();
+			x.preventDefault();
+			$(document).off("scroll");
+
+			// target element id
+			var id = $(this).attr('href');
+
+			// target element
+			var $id = $(id);
+			if ($id.length === 0) {
+				return;
+			}
+
+			// prevent standard hash navigation (avoid blinking in IE)
+			x.preventDefault();
+
+			// top position relative to the document
+			var pos = $id.offset().top - adminbar;
+
+			// animated top scrolling
+			$('body, html').animate({ scrollTop: pos });
+		});
+
+
+		// Scroll Top Nav Items whaich has targetd item are ID's
+		$(document).on('click', 'a[href*="#"]' , function (e) {
+			// Check if the href is on the same page
+			if (this.pathname == window.location.pathname) {
+				e.stopImmediatePropagation();
+				e.preventDefault();
+				
+				// let headerHeight = $('header').height();
+				let headerHeight = $('header').height();
+				console.log(headerHeight);
+
+				let targetId = $(this).attr('href').split('#')[1];
+				let targetElement = $('#' + targetId);
+				if (targetElement.length) { 
+					$('html, body').animate({
+						scrollTop: targetElement.offset().top - headerHeight
+					}, 500);
+				}
+		
+				if (window.matchMedia("(max-width: 1024px)").matches == true) {
+					$('.mobile-pannel').slideToggle();
+					$('body').toggleClass('overflow-hidden');
+				}
+			}
+		});
+    </script>
+    
+</body>
+</html>

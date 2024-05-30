@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h4 {
+            text-align: center;
+            margin: 50px 0;
+        }
+        /*------------------------------------------
+        Accordion Style 1 
+        -----------------------------------------*/
+        .wpb-accordions-wrapper .wpb-accordion-item .wpb-accordion-tab-title {
+            background-color: #F6F6F6;
+            padding: 12px 45px 12px 20px;
+            border: 0;
+            position: relative;
+            cursor: pointer;
+            border-bottom: 4px solid #EBEBEB;
+        }
+        .wpb-accordions-wrapper .wpb-accordion-item .wpb-accordion-tab-title span {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 20px;
+            width: 14px;
+            height: 14px;
+            display: flex;
+        }
+        .wpb-accordions-wrapper .wpb-accordion-item .wpb-accordion-tab-title span img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .wpb-accordions-wrapper .wpb-accordion-item .wpb-accordion-tab-title a{
+            color: inherit;
+            font-weight: 500;
+            line-height: 1.5;
+            font-size: 18px;
+            text-decoration: none;
+            display: inline-block;
+            outline: none;
+        }
+        .wpb-accordions-wrapper .wpb-accordion-item .wpb-accordion-body {
+            padding: 20px 0;
+            display: none;
+        }
+        .wpb-accordions-wrapper.wpb-accordion-icon-left .wpb-accordion-item .wpb-accordion-tab-title span {
+            left: 20px;
+        }
+        .wpb-accordions-wrapper.wpb-accordion-icon-left .wpb-accordion-item .wpb-accordion-tab-title {
+            padding: 12px 20px 12px 45px; 
+        }
+        .wpb-accordions-wrapper .wpb-accordion-item.is-active .wpb-accordion-icon img {
+            transform: rotate(-180deg);
+        }
+        /* Generic */
+        .wpb-accordions-wrapper .wpb-accordion-item:not(:last-child) {
+            margin-bottom: 8px;
+        }
+        .wpb-accordions-wrapper.wpb-compact .wpb-accordion-item {
+            margin-bottom: 0;
+        }
+        /*------------------------------------------
+        Accordion Style 02
+        -----------------------------------------*/
+        .wpb-accordions-wrapper.wpb-style-02 .wpb-accordion-item .wpb-accordion-tab-title {
+            border: 1px solid #00000010;
+        }
+        .wpb-accordions-wrapper.wpb-style-02 .wpb-accordion-item.is-active .wpb-accordion-tab-title {
+            background-color: #C6C6C6;
+            transition: 0.3s all;
+        }
+        /*------------------------------------------
+        Accordion Style 05
+        -----------------------------------------*/
+        .wpb-accordions-wrapper.wpb-style-05 .wpb-accordion-item {
+            border: 1px solid #00000010;
+            padding: 0 20px;
+            box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .wpb-accordions-wrapper.wpb-style-05 .wpb-accordion-item .wpb-accordion-tab-title span {
+            right: 0;
+        }
+        .wpb-accordions-wrapper.wpb-style-05 .wpb-accordion-item .wpb-accordion-tab-title {
+            background-color: transparent;
+            border: 0;
+            padding: 14px 0;
+        }
+        .wpb-accordions-wrapper.wpb-style-05 .wpb-accordion-item .wpb-accordion-body {
+            border-top: 1px solid #00000010;
+        }
+        /*------------------------------------------
+        Accordion Style 07
+        -----------------------------------------*/
+        .wpb-accordions-wrapper.wpb-style-07 .wpb-accordion-item{
+            border-top: 1px solid #00000010;
+        }
+        .wpb-accordions-wrapper.wpb-style-07 .wpb-accordion-item:last-child{
+            border-bottom: 1px solid #00000010;
+        }
+        .wpb-accordions-wrapper.wpb-style-07 .wpb-accordion-item .wpb-accordion-tab-title {
+            padding: 12px 20px 12px 50px;
+            background-color: transparent;
+            border: 0;	
+        }
+        .wpb-accordions-wrapper.wpb-style-07 .wpb-accordion-item .wpb-accordion-body {
+            padding: 10px 20px 30px 50px;
+            border-top: 1px solid #00000010;
+        }
+        .wpb-accordions-wrapper.wpb-style-07 .wpb-accordion-item .wpb-accordion-tab-title span {
+            left: 20px;
+            right: auto;
+        }
+        .wpb-accordions-wrapper.bordered-icon .wpb-accordion-item .wpb-accordion-tab-title span {
+            background-color: #C6C6C6;
+            border-radius: 50%;
+            overflow: hidden;
+            height: 24px;
+            width: 24px;
+            justify-content: center;
+            align-items: center
+        }
+        .wpb-accordions-wrapper.wpb-style-07.bordered-icon .wpb-accordion-item .wpb-accordion-tab-title span {
+            left: 10px;
+        }
+        .wpb-accordions-wrapper.bordered-icon .wpb-accordion-item .wpb-accordion-tab-title span img {
+            size: 12px;
+            background-size: 14px;
+            width: 50%;
+            height: 50%;
+        }
+        .wpb-accordions-wrapper.wpb-style-07 .wpb-accordion-item .wpb-accordion-tab-title span .wpb-minus,
+        .wpb-accordions-wrapper.wpb-style-07 .wpb-accordion-item.is-active .wpb-accordion-tab-title span .wpb-plus {
+            display: none;
+        }
+        .wpb-accordions-wrapper.wpb-style-07 .wpb-accordion-item.is-active .wpb-accordion-tab-title span .wpb-minus {
+            display: block;
+        }
+        /*------------------------------------------
+        Accordion Style 10
+        -----------------------------------------*/
+        .wpb-accordions-wrapper.wpb-style-10 .wpb-accordion-item {
+            background-color: #EBEBEB;
+            border-radius: 10px;
+        }
+        .wpb-accordions-wrapper.wpb-style-10 .wpb-accordion-item:not(:last-child) {
+            margin-bottom: 16px;
+        }
+        .wpb-accordions-wrapper.wpb-style-10 .wpb-accordion-tab-title {
+            border-bottom: 0;
+            background-color: transparent;
+        }
+        .wpb-accordions-wrapper.wpb-style-10 .wpb-accordion-body {
+            padding: 0 20px 30px;
+        }
+        /*------------------------------------------
+        Accordion Style 23
+        -----------------------------------------*/
+        .wpb-accordions-wrapper.wpb-style-23 .wpb-accordion-item .wpb-accordion-tab-title {
+            padding: 20px 0;
+            background-color: transparent;
+            border-bottom: 1px solid #00000010;
+        }
+        .wpb-accordions-wrapper.wpb-style-23 .wpb-accordion-item .wpb-accordion-body {
+            border-bottom: 1px solid #00000010;
+            padding-top: 0;
+        }
+        .wpb-accordions-wrapper.wpb-style-23 .wpb-accordion-item:last-child .wpb-accordion-body {
+            border: 0;
+        }
+        .wpb-accordions-wrapper.wpb-style-23 .wpb-accordion-item .wpb-accordion-tab-title span {
+            right: 0;
+        }
+        .wpb-accordions-wrapper.wpb-style-23 .wpb-accordion-item.is-active .wpb-accordion-tab-title {
+            border: 0
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+
+        <!-- style="background-image: url('../img/overlay.png');" -->
+   
+        <h4>Style #01 (Default)</h4>
+   
+       <section class="">
+         <div class="section-overly"></div>
+         <div class="wpb-container">
+           <div class="wpb-row wpb-single-col-accordion">
+             <div class="wpb-col">
+              
+               <div class="wpb-accordions-wrapper wpb-compact wpb-first-open">
+                 <div class="wpb-accordion-item ">
+                   <div class="wpb-accordion-tab-title">
+                       <span class="wpb-accordion-icon">
+                         <img src="../img/arrow-drop.svg" alt="Arrow Drop">
+                       </span>
+                       <a href="#" class="wpb-accordion-title">Accordion Title</a>
+                   </div>
+                   <div class="wpb-accordion-body">
+                       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aspernatur odit at ducimus veniam tempore nostrum voluptates aut dignissimos, ea perspiciatis vero voluptatibus aperiam voluptas fuga quia accusamus iste! Magni!</p>
+                   </div>
+                 </div>
+   
+                 <div class="wpb-accordion-item ">
+                   <div class="wpb-accordion-tab-title ">
+                       <span class="wpb-accordion-icon">
+                         <img src="../img/arrow-drop.svg" alt="Arrow Drop">
+                       </span>
+                       <a href="#" class="wpb-accordion-title">Accordion Title</a>
+                   </div>
+                   <div class="wpb-accordion-body">
+                       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aspernatur odit at ducimus veniam tempore nostrum voluptates aut dignissimos, ea perspiciatis vero voluptatibus aperiam voluptas fuga quia accusamus iste! Magni!</p>
+                   </div>
+                 </div>
+   
+               </div>
+             </div>
+           </div>
+         </div>
+       </section>
+   
+     <h4>Style #02</h4>
+   
+       <section class="">
+         <div class="section-overly"></div>
+         <div class="wpb-container">
+           <div class="wpb-row wpb-single-col-accordion">
+             <div class="wpb-col">
+              
+               <div class="wpb-accordions-wrapper wpb-first-open wpb-style-02">
+                 <div class="wpb-accordion-item ">
+                   <div class="wpb-accordion-tab-title">
+                       <span class="wpb-accordion-icon">
+                         <img src="../img/arrow-drop.svg" alt="Arrow Drop">
+                       </span>
+                       <a href="#" class="wpb-accordion-title">Accordion Title</a>
+                   </div>
+                   <div class="wpb-accordion-body">
+                       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aspernatur odit at ducimus veniam tempore nostrum voluptates aut dignissimos, ea perspiciatis vero voluptatibus aperiam voluptas fuga quia accusamus iste! Magni!</p>
+                   </div>
+                 </div>
+   
+                 <div class="wpb-accordion-item ">
+                   <div class="wpb-accordion-tab-title ">
+                       <span class="wpb-accordion-icon">
+                         <img src="../img/arrow-drop.svg" alt="Arrow Drop">
+                       </span>
+                       <a href="#" class="wpb-accordion-title">Accordion Title</a>
+                   </div>
+                   <div class="wpb-accordion-body">
+                       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aspernatur odit at ducimus veniam tempore nostrum voluptates aut dignissimos, ea perspiciatis vero voluptatibus aperiam voluptas fuga quia accusamus iste! Magni!</p>
+                   </div>
+                 </div>
+   
+               </div>
+             </div>
+             
+           </div>
+         </div>
+       </section>
+   
+       <h4>Style #05</h4>
+   
+       <section class="">
+         <div class="section-overly"></div>
+         <div class="wpb-container">
+           <div class="wpb-row wpb-single-col-accordion">
+             <div class="wpb-col">
+              
+               <div class="wpb-accordions-wrapper wpb-first-open wpb-style-05">
+                 <div class="wpb-accordion-item ">
+                   <div class="wpb-accordion-tab-title">
+                       <span class="wpb-accordion-icon">
+                         <img src="../img/arrow-drop.svg" alt="Arrow Drop">
+                       </span>
+                       <a href="#" class="wpb-accordion-title">Accordion Title</a>
+                   </div>
+                   <div class="wpb-accordion-body">
+                       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aspernatur odit at ducimus veniam tempore nostrum voluptates aut dignissimos, ea perspiciatis vero voluptatibus aperiam voluptas fuga quia accusamus iste! Magni!</p>
+                   </div>
+                 </div>
+   
+                 <div class="wpb-accordion-item ">
+                   <div class="wpb-accordion-tab-title ">
+                       <span class="wpb-accordion-icon">
+                         <img src="../img/arrow-drop.svg" alt="Arrow Drop">
+                       </span>
+                       <a href="#" class="wpb-accordion-title">Accordion Title</a>
+                   </div>
+                   <div class="wpb-accordion-body">
+                       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aspernatur odit at ducimus veniam tempore nostrum voluptates aut dignissimos, ea perspiciatis vero voluptatibus aperiam voluptas fuga quia accusamus iste! Magni!</p>
+                   </div>
+                 </div>
+   
+               </div>
+             </div>
+             
+           </div>
+         </div>
+       </section>
+   
+       <h4>Style #07</h4>
+   
+       <section class="">
+         <div class="section-overly"></div>
+         <div class="wpb-container">
+           <div class="wpb-row wpb-single-col-accordion">
+             <div class="wpb-col">
+              
+               <div class="wpb-accordions-wrapper wpb-compact bordered-icon wpb-first-open wpb-style-07">
+                 <div class="wpb-accordion-item ">
+                   <div class="wpb-accordion-tab-title ">
+                       <span class="wpb-accordion-icon">
+                         <img src="../img/Vector.svg" alt="Arrow Drop" class="wpb-plus">
+                         <img src="../img/minus.svg" alt="Arrow Drop" class="wpb-minus">
+                       </span>
+                       <a href="#" class="wpb-accordion-title">Accordion Title</a>
+                   </div>
+                   <div class="wpb-accordion-body">
+                       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aspernatur odit at ducimus veniam tempore nostrum voluptates aut dignissimos, ea perspiciatis vero voluptatibus aperiam voluptas fuga quia accusamus iste! Magni!</p>
+                   </div>
+                 </div>
+   
+                 <div class="wpb-accordion-item ">
+                   <div class="wpb-accordion-tab-title ">
+                       <span class="wpb-accordion-icon">
+                         <img src="../img/Vector.svg" alt="Arrow Drop" class="wpb-plus">
+                         <img src="../img/minus.svg" alt="Arrow Drop" class="wpb-minus">
+                       </span>
+                       <a href="#" class="wpb-accordion-title">Accordion Title</a>
+                   </div>
+                   <div class="wpb-accordion-body">
+                       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aspernatur odit at ducimus veniam tempore nostrum voluptates aut dignissimos, ea perspiciatis vero voluptatibus aperiam voluptas fuga quia accusamus iste! Magni!</p>
+                   </div>
+                 </div>
+   
+               </div>
+             </div>
+             
+           </div>
+         </div>
+       </section>
+   
+       <h4>Style #10</h4>
+   
+       <section class="">
+         <div class="section-overly"></div>
+         <div class="wpb-container">
+           <div class="wpb-row wpb-single-col-accordion">
+             <div class="wpb-col">
+              
+               <div class="wpb-accordions-wrapper wpb-first-open wpb-style-10 bordered-icon">
+                 <div class="wpb-accordion-item ">
+                   <div class="wpb-accordion-tab-title">
+                       <span class="wpb-accordion-icon">
+                         <img src="../img/arrow-drop.svg" alt="Arrow Drop">
+                       </span>
+                       <a href="#" class="wpb-accordion-title">Accordion Title</a>
+                   </div>
+                   <div class="wpb-accordion-body">
+                       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aspernatur odit at ducimus veniam tempore nostrum voluptates aut dignissimos, ea perspiciatis vero voluptatibus aperiam voluptas fuga quia accusamus iste! Magni!</p>
+                   </div>
+                 </div>
+   
+                 <div class="wpb-accordion-item ">
+                   <div class="wpb-accordion-tab-title ">
+                       <span class="wpb-accordion-icon">
+                         <img src="../img/arrow-drop.svg" alt="Arrow Drop">
+                       </span>
+                       <a href="#" class="wpb-accordion-title">Accordion Title</a>
+                   </div>
+                   <div class="wpb-accordion-body">
+                       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aspernatur odit at ducimus veniam tempore nostrum voluptates aut dignissimos, ea perspiciatis vero voluptatibus aperiam voluptas fuga quia accusamus iste! Magni!</p>
+                   </div>
+                 </div>
+   
+               </div>
+             </div>
+             
+           </div>
+         </div>
+       </section>
+   
+       <h4>Style #23</h4>
+   
+       <section class="">
+         <div class="section-overly"></div>
+         <div class="wpb-container">
+           <div class="wpb-row wpb-single-col-accordion">
+             <div class="wpb-col">
+              
+               <div class="wpb-accordions-wrapper wpb-first-open wpb-style-23">
+                 <div class="wpb-accordion-item ">
+                   <div class="wpb-accordion-tab-title">
+                       <span class="wpb-accordion-icon">
+                         <img src="../img/arrow-drop.svg" alt="Arrow Drop">
+                       </span>
+                       <a href="#" class="wpb-accordion-title">Accordion Title</a>
+                   </div>
+                   <div class="wpb-accordion-body">
+                       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aspernatur odit at ducimus veniam tempore nostrum voluptates aut dignissimos, ea perspiciatis vero voluptatibus aperiam voluptas fuga quia accusamus iste! Magni!</p>
+                   </div>
+                 </div>
+   
+                 <div class="wpb-accordion-item ">
+                   <div class="wpb-accordion-tab-title ">
+                       <span class="wpb-accordion-icon">
+                         <img src="../img/arrow-drop.svg" alt="Arrow Drop">
+                       </span>
+                       <a href="#" class="wpb-accordion-title">Accordion Title</a>
+                   </div>
+                   <div class="wpb-accordion-body">
+                       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aspernatur odit at ducimus veniam tempore nostrum voluptates aut dignissimos, ea perspiciatis vero voluptatibus aperiam voluptas fuga quia accusamus iste! Magni!</p>
+                   </div>
+                 </div>
+   
+               </div>
+             </div>
+             
+           </div>
+         </div>
+       </section>
+   
+    <br><br><br><br>
+    </main>
+
+
+    <script src="../dep/jQuery.js"></script>
+    <script>
+        (function($){
+            $('.wpb-accordion-tab-title').on('click' ,function() {
+                $(this).siblings(".wpb-accordion-body").slideToggle().closest('.wpb-accordion-item').toggleClass('is-active').siblings().removeClass("is-active").find(".wpb-accordion-body").slideUp()
+            });
+
+            $(".wpb-accordions-wrapper.wpb-first-open").find(".wpb-accordion-item").first().addClass("is-active").find(".wpb-accordion-body").slideDown();
+
+            }(jQuery));
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Button icon break in new line with last word</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #cacaca;
+      }
+
+      .wrapper {
+        border: 1px solid red;
+        padding: 20px;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      a.read-more {
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 22px;
+        text-align: left;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      a.read-more > span:last-child {
+        display: inline-block;
+        text-decoration: inherit;
+      }
+      a.read-more:not(:has(.last)):after,
+      a.read-more > span:last-child:after {
+        background: url("./read-more-arrow.svg") no-repeat center right;
+        background-size: contain;
+        width: 54px;
+        height: 16px;
+        display: inline-block;
+        content: "";
+        vertical-align: middle;
+        margin-left: 15px;
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <section class="css-btn">
+        <a href="#" class="read-more">Box Office <span>Information</span></a>
+      </section>
+      <br /><br /><br />
+      <section class="js-btn">
+        <a href="" class="text-link read-more">Box Office Information 2</a>
+      </section>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+        //JS For Drop the last word with arrow
+      // Simple Text Link
+      $(
+        // ".text-link .elementor-button, .text-link.more-btn, .arrow-btn .elementor-button"
+        ".read-more"
+      ).html(function () {
+        // separate the text by spaces
+        var text = $(this).text().split(" ");
+        // drop the last word and store it in a variable
+        var last = text.pop().trim();
+        // join the text back and if it has more than 1 word add the span tag
+        // to the last word
+        return (
+          text.join(" ") +
+          (text.length > 0 ? ' <span class="last">' + last + "</span>" : last)
+        );
+      });
+    </script>
+  </body>
+</html>

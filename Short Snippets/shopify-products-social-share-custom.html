@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="../dep/jQuery.js"></script>
+    <script>
+        $('body.template-customers-account .cta-wrapper .btn').addClass("share_button");
+
+        $("body").append(`
+            <div class="share_popup_modal">
+                <div class="overlay_wrapper"></div>
+                <div class="popup_inner_wrapper">
+                    <div class="share-header">
+                        <h3>Share link</h3>
+                        <span class="close_btn"><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="250px" height="250px"><path d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z"/></svg></span>
+                    </div>
+                    <div class="share_buttons_wrapper">
+                        <h5>Share Via</h5>
+                        <div class="share_buttons">
+                            <a href="" class="share_icon fb"><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="480px" height="480px"><path fill="#039be5" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"/><path fill="#fff" d="M26.572,29.036h4.917l0.772-4.995h-5.69v-2.73c0-2.075,0.678-3.915,2.619-3.915h3.119v-4.359c-0.548-0.074-1.707-0.236-3.897-0.236c-4.573,0-7.254,2.415-7.254,7.917v3.323h-4.701v4.995h4.701v13.729C22.089,42.905,23.032,43,24,43c0.875,0,1.729-0.08,2.572-0.194V29.036z"/></svg></a>
+                            <a href="" class="share_icon tw"><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="480px" height="480px"><path fill="#03A9F4" d="M42,12.429c-1.323,0.586-2.746,0.977-4.247,1.162c1.526-0.906,2.7-2.351,3.251-4.058c-1.428,0.837-3.01,1.452-4.693,1.776C34.967,9.884,33.05,9,30.926,9c-4.08,0-7.387,3.278-7.387,7.32c0,0.572,0.067,1.129,0.193,1.67c-6.138-0.308-11.582-3.226-15.224-7.654c-0.64,1.082-1,2.349-1,3.686c0,2.541,1.301,4.778,3.285,6.096c-1.211-0.037-2.351-0.374-3.349-0.914c0,0.022,0,0.055,0,0.086c0,3.551,2.547,6.508,5.923,7.181c-0.617,0.169-1.269,0.263-1.941,0.263c-0.477,0-0.942-0.054-1.392-0.135c0.94,2.902,3.667,5.023,6.898,5.086c-2.528,1.96-5.712,3.134-9.174,3.134c-0.598,0-1.183-0.034-1.761-0.104C9.268,36.786,13.152,38,17.321,38c13.585,0,21.017-11.156,21.017-20.834c0-0.317-0.01-0.633-0.025-0.945C39.763,15.197,41.013,13.905,42,12.429"/></svg></a>
+                            <a href="" class="share_icon pin"><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="480px" height="480px"><circle cx="24" cy="24" r="20" fill="#E60023"/><path fill="#FFF" d="M24.4439087,11.4161377c-8.6323242,0-13.2153931,5.7946167-13.2153931,12.1030884	c0,2.9338379,1.5615234,6.5853882,4.0599976,7.7484131c0.378418,0.1762085,0.581543,0.1000366,0.668457-0.2669067	c0.0668945-0.2784424,0.4038086-1.6369019,0.5553589-2.2684326c0.0484619-0.2015381,0.0246582-0.3746338-0.1384277-0.5731201	c-0.8269653-1.0030518-1.4884644-2.8461304-1.4884644-4.5645752c0-4.4115601,3.3399658-8.6799927,9.0299683-8.6799927	c4.9130859,0,8.3530884,3.3484497,8.3530884,8.1369019c0,5.4099731-2.7322998,9.1584473-6.2869263,9.1584473	c-1.9630737,0-3.4330444-1.6238403-2.9615479-3.6153564c0.5654297-2.3769531,1.6569214-4.9415283,1.6569214-6.6584473	c0-1.5354004-0.8230591-2.8169556-2.5299683-2.8169556c-2.006958,0-3.6184692,2.0753784-3.6184692,4.8569336	c0,1.7700195,0.5984497,2.9684448,0.5984497,2.9684448s-1.9822998,8.3815308-2.3453979,9.9415283	c-0.4019775,1.72229-0.2453003,4.1416016-0.0713501,5.7233887l0,0c0.4511108,0.1768799,0.9024048,0.3537598,1.3687744,0.4981079l0,0	c0.8168945-1.3278198,2.0349731-3.5056763,2.4864502-5.2422485c0.2438354-0.9361572,1.2468872-4.7546387,1.2468872-4.7546387	c0.6515503,1.2438965,2.5561523,2.296936,4.5831299,2.296936c6.0314941,0,10.378418-5.546936,10.378418-12.4400024	C36.7738647,16.3591919,31.3823242,11.4161377,24.4439087,11.4161377z"/></svg></a>
+                        </div>
+                        <div class="copy_link">
+                            <input type="text" id="copy_input">
+                            <button class="copy_link_button">Copy Link</button>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+
+        $('.share_button').on('click', function(e) {
+            e.preventDefault();
+            $('.share_popup_modal').addClass('active');
+            let shareUrl = $(this).attr('href');
+            const siteURL = window.location.hostname;
+
+            $("#copy_input").val(siteURL + shareUrl);
+            
+            // Facebook share button
+            let facebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + siteURL + encodeURIComponent(shareUrl);
+            $('.share_icon.fb').attr('href', facebookUrl).attr('target', '_blank');
+            // Twitter share button
+            let twitterUrl = 'https://twitter.com/share?url=' + siteURL + encodeURIComponent(shareUrl);
+            $('.share_icon.tw').attr('href', twitterUrl).attr('target', '_blank');
+            // Pinit share button
+            let pinitUrl = 'http://pinterest.com/pinthis?url=' + siteURL + encodeURIComponent(shareUrl);
+            $('.share_icon.pin').attr('href', pinitUrl).attr('target', '_blank');
+            
+        });
+
+
+        $('.close_btn , .overlay_wrapper , .share_icon.pin , .share_icon.tw , .share_icon.fb').on('click' , function() {
+            $('.share_popup_modal').removeClass('active');
+            $('.copy_link_button').text("Copy Link");
+        });
+
+        $(".copy_link_button").on('click' , function() {
+            let $copyButton = $(this);
+            let inputValue = $("#copy_input").val();
+            navigator.clipboard.writeText(inputValue).then(function() {
+                $copyButton.text("Text Copied");
+            });
+        });
+    </script>
+</body>
+</html>

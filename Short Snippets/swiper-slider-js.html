@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="../dep/jQuery.js"></script>
+    <script>
+
+        let event_detail_slider;
+        if ($('.event_detail_slider_wrapper .event_detail_slider .swiper-slide').length > 1) {
+            event_detail_slider = new Swiper('.event_detail_slider', {
+                slidesPerView: 1,
+                loop: true,
+                grabCursor: true,
+                navigation: {
+                    nextEl: ".events_slide_next",
+                    prevEl: ".events_slide_prev",
+                },
+            });
+        }
+
+        let cs_swiper;
+        $(window).on("load resize ", function () {
+            if (window.matchMedia("(max-width: 1024px)").matches) {
+                $('.mobile-tab-title').removeClass('active');
+                $('.tabs-content-item.active').prev().addClass('active');
+            }
+            if ($(".posts-wrp").length) {
+                if (window.matchMedia("(max-width: 1024px)").matches) {
+                    $(".posts-wrp .elementor-widget-container").addClass("swiper");
+                    $(".posts-wrp .elementor-widget-container > .elementor-posts").addClass("swiper-wrapper");
+                    $(".posts-wrp .elementor-widget-container > .elementor-posts > article").addClass("swiper-slide");
+                    if (cs_swiper?.destroyed === true || !cs_swiper) {
+                        cs_swiper = new Swiper(
+                            ".posts-wrp .elementor-widget-container",
+                            {
+                                slidesPerView: 1,
+                                loop: false,
+                                spaceBetween: 20,
+                                pagination: {
+                                    el: ".cs-pagination",
+                                    clickable: true,
+                                },
+                                breakpoints: {
+                                    768: {
+                                        slidesPerView: 2,
+                                        spaceBetween: 30,
+                                    },
+                                },
+                                navigation: {
+                                    nextEl: ".cs-arrow-next",
+                                    prevEl: ".cs-arrow-prev",
+                                },
+                            }
+                        );
+                    }
+                } else {
+                    if (cs_swiper !== undefined) cs_swiper.destroy(true, true);
+                    $(".posts-wrp .elementor-widget-container").removeClass("swiper  swiper-container-initialized ");
+                    $(".posts-wrp .elementor-widget-container > .elementor-posts").removeClass("swiper-wrapper");
+                    $(".posts-wrp .elementor-widget-container > .elementor-posts > article").removeClass("swiper-slide");
+                }
+            }
+        });
+
+
+    </script>
+</body>
+</html>

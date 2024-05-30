@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        (function ($) {
+
+            function generate_select(selector) {
+                $(selector).each(function () {
+
+                    // Cache the number of options
+                    var $this = $(this),
+                        activeValue = $this.val(),
+                        classselect = $this.attr("class"),
+                        numberOfOptions = $(this).children("option").length;
+
+                    // Hides the select element
+                    $this.addClass("s-hidden");
+
+                    // Wrap the select element in a div
+                    $this.wrap('<div class="select ' + classselect + '"></div>');
+
+                    // Insert a styled div to sit over the top of the hidden select element
+                    $this.after('<div class="styledSelect" tabindex="0" role="button"></div>');
+
+                    // Cache the styled div
+                    var $styledSelect = $this.next("div.styledSelect");
+
+                    var getHTML = $this.children('option[value="' + $this.val() + '"]').text();
+
+                    //   if ($this.children('option[value="' + $this.val() + '"]').length > 1) {
+                    // var getHTML = $this
+                    // .children("option")
+                    // .eq(0)
+                    // .text();
+                    //   }
+                    // Show the first select option in the styled div
+                    $styledSelect.html('<span class="text-ellipses">' + getHTML + '</span>');
+
+                    // Insert an unordered list after the styled div and also cache the list
+                    var $list = $("<ul />", { class: "options" }).insertAfter($styledSelect);
+
+                    // Insert a list item into the unordered list for each select option
+                    for (var i = 1; i < numberOfOptions; i++) {
+                        var Cls = $this.children("option").eq(i).attr('class');
+                        if (Cls == undefined) {
+                            Cls = '';
+                        }
+                        if ($this.children("option").eq(i).val() == activeValue) {
+                            Cls = Cls + ' active';
+                            $('.text-ellipses').addClass('valueAdded');
+                        }
+                        $("<li />", {
+                            text: $this
+                                .children("option")
+                                .eq(i)
+                                .text(),
+                            rel: $this
+                                .children("option")
+                                .eq(i)
+                                .val(),
+                            class: Cls
+                        }).appendTo($list);
+                    }
+
+                    // Cache the list items
+                    var $listItems = $list.children("li");
+
+                    // Show the unordered list when the styled div is clicked (also hides it if the div is clicked again)
+                    $styledSelect.click(function (e) {
+                        e.stopPropagation();
+                        if (!$(this).hasClass('active')) {
+                            $('div.styledSelect.active').each(function () {
+                                $(this).removeClass('active').next('ul.options').slideUp();
+                                // return false;
+                            });
+                            $(this).toggleClass("active");
+                            $(this).next("ul.options").stop(true).slideToggle();
+                        } else {
+                            $('div.styledSelect.active').each(function () {
+                                $(this).removeClass('active').next('ul.options').slideUp();
+                                // return false;
+                            });
+                        }
+                    });
+
+                    // Hides the unordered list when a list item is clicked and updates the styled div to show the selected list item
+                    // Updates the select element to have the value of the equivalent option
+                    $listItems.click(function (e) {
+                        e.stopPropagation();
+                        $styledSelect.html('<span class="text-ellipses valueAdded">' + $(this).text() + '</span>').removeClass("active");
+                        var value = $(this).attr("rel").toString();
+                        $($this).val(value);
+                        $($this).trigger("change");
+                        $('ul.options').slideUp();
+                        $(this).addClass("active").siblings().removeClass("active");
+                        /* alert($this.val()); Uncomment this for demonstration! */
+                    });
+
+                    // Hides the unordered list when clicking outside of it
+                    $(document).click(function () {
+                        $styledSelect.removeClass("active");
+                        $list.slideUp();
+                    });
+
+                });
+            }
+
+            $(document).ready(function () {
+                //run the select code for all selects
+                generate_select('select:not(.gfield_select, .tax-form-wrapper select)');
+            })
+
+        }(jQuery))
+    </script>
+</body>
+</html>

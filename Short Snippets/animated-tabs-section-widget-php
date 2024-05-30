@@ -1,0 +1,263 @@
+<!-- 
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+/**
+ *   Checkout Tabs
+ *
+ * @since 1.0.0
+ */
+class Tulalip_Static_Tabs extends \Elementor\Widget_Base {
+
+	/**
+	 * Get widget name.
+	 *
+	 * Retrieve widget name.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @return string Widget name.
+	 */
+	public function get_name() {
+		return 'homepage-tabs';
+	}
+
+	/**
+	 * Get widget title.
+	 *
+	 * Retrieve widget title.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @return string Widget title.
+	 */
+	public function get_title() {
+		return esc_html__( 'Tulalip Tabs', 'tulalip' );
+	}
+
+	/**
+	 * Get widget icon.
+	 *
+	 * Retrieve widget icon.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @return string Widget icon.
+	 */
+	public function get_icon() {
+		return 'eicon-tabs';
+	}
+
+	/**
+	 * Get widget categories.
+	 *
+	 * Register the widget in our own custom category.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @return array Widget categories.
+	 */
+	public function get_categories() {
+		return array( 'tulalip_widgets' );
+	}
+
+	/**
+	 * Register widget controls.
+	 *
+	 * Add input fields to allow the user to customize the widget settings.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 */
+	protected function register_controls() {
+
+		$this->start_controls_section(
+			'content_section',
+			array(
+				'label' => __( 'Content', 'tulalip' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+			)
+		);
+
+		$repeater = new \Elementor\Repeater();
+
+		$repeater->add_control(
+			'homepage_tab_color',
+			array(
+				'label'   => __( 'Tab Color', 'tulalip' ),
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => 'center',
+				'options' => array(
+					'green'  => __( 'Green', 'tulalip' ),
+					'red'    => __( 'Red', 'tulalip' ),
+					'purple' => __( 'Purple', 'tulalip' ),
+				),
+			)
+		);
+
+		$repeater->add_control(
+			'homepage_tab_image',
+			array(
+				'label'   => __( 'Image', 'tulalip' ),
+				'type'    => \Elementor\Controls_Manager::MEDIA,
+				'default' => array(
+					'url' => \Elementor\Utils::get_placeholder_image_src(),
+					'alt' => __( 'Image', 'tulalip' ),
+				),
+			)
+		);
+
+		$repeater->add_control(
+			'tab_title',
+			array(
+				'label'       => __( 'Title', 'tulalip' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'default'     => __( 'Tab Title', 'tulalip' ),
+				'label_block' => true,
+			)
+		);
+
+		$repeater->add_control(
+			'tab_description',
+			array(
+				'label'      => __( 'Description', 'tulalip' ),
+				'type'       => \Elementor\Controls_Manager::WYSIWYG,
+				'default'    => __( 'Tab Description', 'tulalip' ),
+				'show_label' => true,
+			)
+		);
+
+		$repeater->add_control(
+			'tab_link_text',
+			array(
+				'label'       => __( 'Link Text', 'tulalip' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'default'     => __( 'Tab link Text', 'tulalip' ),
+				'label_block' => true,
+			)
+		);
+
+		$repeater->add_control(
+			'tab_link',
+			array(
+				'label'         => __( 'Link', 'tulalip' ),
+				'type'          => \Elementor\Controls_Manager::URL,
+				'placeholder'   => __( 'https://your-link.com', 'tulalip' ),
+				'show_external' => true,
+				'default'       => array(
+					'url'         => '#',
+					'is_external' => false,
+					'nofollow'    => false,
+				),
+			)
+		);
+
+		$this->add_control(
+			'list',
+			array(
+				'label'       => __( 'Tabs List', 'tulalip' ),
+				'type'        => \Elementor\Controls_Manager::REPEATER,
+				'fields'      => $repeater->get_controls(),
+				'default'     => array(
+					array(
+						'tab_title'       => __( 'Tab #1', 'tulalip' ),
+						'tab_description' => __( 'Tab Description', 'tulalip' ),
+						'tab_link_text'   => __( 'Link Text', 'tulalip' ),
+						'tab_link_link'   => __( '#', 'tulalip' ),
+					),
+					array(
+						'tab_title'       => __( 'Tab #2', 'tulalip' ),
+						'tab_description' => __( 'Tab Description', 'tulalip' ),
+						'tab_link_text'   => __( 'Link Text', 'tulalip' ),
+						'tab_link_link'   => __( '#', 'tulalip' ),
+					),
+				),
+				'title_field' => '{{{ tab_title }}}',
+			)
+		);
+
+		$this->end_controls_section();
+	}
+
+	/**
+	 * Render course format widget output on the frontend.
+	 *
+	 * Written in PHP and used to generate the final HTML.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 */
+	protected function render() {
+		$settings = $this->get_settings_for_display();
+		$list     = $settings['list'] ? $settings['list'] : array();
+		if ( ! empty( $list ) ) {
+			?>
+			<div class="tabs-section">
+				<!-- Top Wrapper -->
+				<div class="tabs-buttons-wrapper">
+					<?php
+					foreach ( $list as $index => $item ) {
+						$color = isset( $item['homepage_tab_color'] ) ? ' ' . $item['homepage_tab_color'] . '-button' : '';
+						$title = isset( $item['tab_title'] ) ? $item['tab_title'] : '';
+						?>
+						<button class="tabs-button  ">
+							<span><?php echo esc_html( $title ); ?></span>
+						</button>
+					 
+					<div class="slider"></div>
+				</div>
+
+				<!-- Bottom Wrapper -->
+				<div class="tabs-content-wrapper">
+					<!-- Bottom Left Block -->
+					<div class="overflow">
+						<div class="block-content-wrapper">
+							<!-- Loop -->
+							<?php
+							foreach ( $list as $index => $item ) {
+								$color = isset( $item['homepage_tab_color'] ) ? ' ' . $item['homepage_tab_color'] . '-content' : '';
+
+								?>
+								<div class="content-wrapper  ">
+										<?php
+										$this->remove_render_attribute( 'tab_link' );
+										if ( ! empty( $item['tab_link'] ) ) {
+											$this->add_link_attributes( 'tab_link', $item['tab_link'] );
+										}
+										?>
+										<h3 class="tab-headline borderd"><?php echo esc_html( $item['tab_title'] ); ?></h3>
+										<?php if ( isset( $item['tab_description'] ) && ! empty( $item['tab_description'] ) ) : ?>
+											<div class="description">
+												<?php echo wp_kses_post( $item['tab_description'] ); ?>
+											</div>
+										<?php endif; ?>
+										<a <?php echo $this->get_render_attribute_string( 'tab_link' ); ?> class="tabs-cta">
+											<?php echo esc_html( $item['tab_link_text'] ); ?>
+										</a>
+								</div>
+							 
+
+							<!-- Loop End -->
+						</div>
+					</div>
+
+					<!-- Bottom Right Block -->
+					<div class="overflow">
+						<div class="block-image-wrapper">
+							<?php foreach ( $list as $index => $item ) { ?>
+								<div class="image-wrapper">
+									<?php if ( isset( $item['homepage_tab_image']['url'] ) ) { ?>
+										<img src="<?php echo esc_url( $item['homepage_tab_image']['url'] ); ?>" alt="<?php echo esc_attr( $item['homepage_tab_image']['alt'] ) ? esc_attr( $item['homepage_tab_image']['alt'] ) : 'Image'; ?>" />
+									 
+								</div>
+							 
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php
+		}
+	}
+}

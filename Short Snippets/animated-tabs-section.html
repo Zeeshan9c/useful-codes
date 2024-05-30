@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .tabs-section {
+        display: flex;
+        flex-direction: column;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .tabs-section .tabs-buttons-wrapper .scroller,
+      .tabs-section .tabs-buttons-wrapper {
+        position: relative;
+        display: flex;
+        column-gap: 30px;
+      }
+      .tabs-section .tabs-buttons-wrapper .scroller {
+        flex: 1;
+      }
+      .tabs-section .slider {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        background-color: #f5efeb;
+        position: absolute;
+        bottom: 0;
+        transition: all 0.4s linear;
+        border-radius: 5px 5px 0 0;
+      }
+      .tabs-section .overflow {
+        overflow: hidden;
+      }
+      .tabs-section .tabs-content-wrapper {
+        display: flex;
+        flex-direction: row;
+        background-color: #f5efeb;
+        min-height: 368px;
+      }
+      .tabs-section .tabs-content-wrapper > .overflow:first-child {
+        width: 57%;
+        min-width: 57%;
+      }
+      .tabs-section .tabs-content-wrapper > .overflow:last-child {
+        width: 43.05%;
+        min-width: 43.05%;
+      }
+      .tabs-section .tabs-button {
+        flex: 1;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+        z-index: 1;
+        padding: 20px 20px 20px;
+        font-size: 20px;
+        line-height: 1.6;
+        border: 0;
+        background-color: transparent;
+        font-weight: 500;
+      }
+      .tabs-section .tabs-button:focus-visible {
+        outline: 2px solid #1e1e1e;
+        outline-offset: -2px;
+      }
+      .tabs-section .tabs-button:not(.active):hover {
+        opacity: 0.8;
+      }
+      .tabs-section .tabs-button:focus {
+        outline: none;
+      }
+      .tabs-section .tabs-button span {
+        font-size: inherit;
+        color: inherit;
+      }
+      .tabs-section .content-wrapper .tabs-cta {
+        text-transform: uppercase;
+        letter-spacing: 1.8px;
+        font-size: 18px;
+        font-weight: 800;
+        text-decoration: none;
+        margin-top: 32px;
+        display: inline-block;
+        line-height: 1.2;
+        max-width: max-content;
+      }
+      .tabs-section .content-wrapper .tabs-cta:hover {
+        text-decoration: underline;
+      }
+      .tabs-section .content-wrapper .tab-headline {
+        margin-top: 0;
+        font-size: 36px;
+        line-height: 1.2;
+      }
+      .tabs-section .content-wrapper .description {
+        margin-top: 17px;
+      }
+      .tabs-section .content-wrapper .description p {
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      .tabs-section .content-wrapper .description p:not(:last-child) {
+        margin-bottom: 28px;
+      }
+      .tabs-section .block-image-wrapper .image-wrapper,
+      .tabs-section .block-content-wrapper .content-wrapper {
+        min-width: 100%;
+        padding: 45px 70px 40px 40px;
+      }
+      .tabs-section .block-content-wrapper .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .tabs-section .block-image-wrapper .image-wrapper {
+        padding: 0;
+        overflow: hidden;
+      }
+      .tabs-section .block-image-wrapper {
+        position: relative;
+        width: 100%;
+      }
+      .tabs-section .block-image-wrapper .image-wrapper {
+        padding-bottom: 60%;
+        position: relative;
+      }
+      .tabs-section .block-image-wrapper .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        object-fit: cover;
+      }
+      .tabs-section .block-image-wrapper,
+      .tabs-section .block-content-wrapper {
+        display: flex;
+        width: 100%;
+        height: 100%;
+      }
+      .tabs-section .block-image-wrapper,
+      .tabs-section .block-content-wrapper {
+        position: relative;
+        -webkit-transition: all 0.4s ease-in-out;
+        -moz-transition: all 0.4s ease-in-out;
+        -ms-transition: all 0.4s ease-in-out;
+        -o-transition: all 0.4s ease-in-out;
+        transition: all 0.4s ease-in-out;
+      }
+      .tabs-section .block-image-wrapper[data-tab="1"],
+      .tabs-section .block-content-wrapper[data-tab="1"] {
+        transform: translateX(-100%);
+      }
+      .tabs-section .block-image-wrapper[data-tab="2"],
+      .tabs-section .block-content-wrapper[data-tab="2"] {
+        transform: translateX(-200%);
+      }
+      .tabs-section .block-image-wrapper[data-tab="3"],
+      .tabs-section .block-content-wrapper[data-tab="3"] {
+        transform: translateX(-300%);
+      }
+      .tabs-section .block-image-wrapper[data-tab="4"],
+      .tabs-section .block-content-wrapper[data-tab="4"] {
+        transform: translateX(-400%);
+      }
+      .tabs-section .block-image-wrapper[data-tab="5"],
+      .tabs-section .block-content-wrapper[data-tab="5"] {
+        transform: translateX(-500%);
+      }
+      .tabs-section .block-image-wrapper[data-tab="6"],
+      .tabs-section .block-content-wrapper[data-tab="6"] {
+        transform: translateX(-600%);
+      }
+      .tabs-section .block-image-wrapper[data-tab="7"],
+      .tabs-section .block-content-wrapper[data-tab="7"] {
+        transform: translateX(-700%);
+      }
+      .tabs-section .block-image-wrapper[data-tab="8"],
+      .tabs-section .block-content-wrapper[data-tab="8"] {
+        transform: translateX(-800%);
+      }
+      .tabs-section .block-image-wrapper[data-tab="9"],
+      .tabs-section .block-content-wrapper[data-tab="9"] {
+        transform: translateX(-900%);
+      }
+      .tabs-section .block-image-wrapper[data-tab="10"],
+      .tabs-section .block-content-wrapper[data-tab="10"] {
+        transform: translateX(-1000%);
+      }
+      .tabs-section .block-content-wrapper .content-wrapper {
+        border-bottom: 3px solid;
+      }
+      .tabs-section .block-content-wrapper .content-wrapper.green-content {
+        border-bottom-color: var(--tulalip-resort-casino-1);
+      }
+      .tabs-section .block-content-wrapper .content-wrapper.red-content {
+        border-bottom-color: var(--quil-ceda-creek-casino-1);
+      }
+      .tabs-section .block-content-wrapper .content-wrapper.purple-content {
+        border-bottom-color: var(--tulalip-bingo-and-slots-1);
+      }
+      .tabs-section .content-wrapper.green-content .tabs-cta,
+      .tabs-section .content-wrapper.green-content .tab-headline,
+      .tabs-section .tabs-button.green-button {
+        color: var(--tulalip-resort-casino-1);
+      }
+      .tabs-section .content-wrapper.red-content .tabs-cta,
+      .tabs-section .content-wrapper.red-content .tab-headline,
+      .tabs-section .tabs-button.red-button {
+        color: var(--quil-ceda-creek-casino-1);
+      }
+      .tabs-section .content-wrapper.purple-content .tabs-cta,
+      .tabs-section .content-wrapper.purple-content .tab-headline,
+      .tabs-section .tabs-button.purple-button {
+        color: var(--tulalip-bingo-and-slots-1);
+      }
+      .tabs-section .block-content-wrapper .tabs-button,
+      .tabs-section .block-content-wrapper .content-wrapper .image-wrapper {
+        display: none;
+      }
+      .iScrollHorizontalScrollbar {
+        position: absolute;
+        z-index: 9999;
+        height: 4px;
+        left: 2px;
+        right: 2px;
+        bottom: 0;
+        overflow: hidden;
+      }
+      .iScrollIndicator {
+        position: absolute;
+        border: 2px solid #1e1e1e;
+        border-radius: 0;
+      }
+      .iScrollHorizontalScrollbar.show-scrollbar {
+        opacity: 1 !important;
+      }
+      @media screen and (max-width: 981px) {
+        .tabs-section .tabs-buttons-wrapper .scroller,
+        .tabs-section .tabs-buttons-wrapper {
+          display: none;
+        }
+        .tabs-section .tabs-content-wrapper > .overflow:last-child,
+        .block-image-wrapper {
+          display: none !important;
+        }
+        .tabs-section .tabs-content-wrapper > .overflow:first-child {
+          min-width: 100%;
+        }
+        .tabs-section .block-content-wrapper {
+          flex-direction: column;
+        }
+        .tabs-section .block-content-wrapper .tabs-button {
+          border-radius: 0;
+          display: inline-block;
+          border-top: 1px solid #e5c1a8 !important;
+          background-color: var(--white);
+        }
+        .tabs-section .block-content-wrapper .content-wrapper {
+          border: 0;
+          display: none;
+          padding: 0px 15px 30px 15px;
+          border-bottom: 0;
+        }
+        .tabs-section .block-content-wrapper .content-wrapper .image-wrapper {
+          display: block;
+        }
+        .tabs-section .tabs-content-wrapper {
+          min-height: unset;
+        }
+        .tabs-section {
+          border-bottom: 1px solid #e5c1a8 !important;
+          border-radius: 0;
+          background-color: var(--basic-2);
+        }
+        .tabs-section .content-wrapper .tab-headline {
+          font-size: 28px;
+        }
+        .tabs-section .slider {
+          display: none;
+        }
+        .tabs-section .tabs-button {
+          padding: 20px;
+          border-radius: 0;
+        }
+        .tabs-section .tabs-button.active {
+          background-color: #f5efeb;
+          pointer-events: none;
+        }
+        .tabs-section .content-wrapper .image-wrapper {
+          padding-bottom: 60%;
+          position: relative;
+          margin-bottom: 24px;
+          min-height: 265px;
+        }
+        .tabs-section .content-wrapper .image-wrapper img {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          object-fit: cover;
+        }
+        .tabs-section
+          .tabs-section
+          .tabs-content-wrapper
+          > .overflow:first-child,
+        .tabs-section .tabs-content-wrapper > .overflow:last-child {
+          width: 100%;
+        }
+        .tabs-section .content-wrapper .tabs-cta {
+          margin-top: 24px;
+        }
+        .tabs-section .content-wrapper .description {
+          margin-top: 11px;
+        }
+        .tabs-section .tabs-button:not(.active):hover {
+          opacity: 1;
+        }
+        .tabs-section .block-content-wrapper {
+          transform: unset !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tabs-section">
+		<!-- Top Wrapper -->
+      	<div class="tabs-buttons-wrapper">
+          	<button class="tabs-button green-button active" tabindex="0"><span>Tulalip Resort Casino</span></button>
+			<button class="tabs-button red-button" tabindex="-1"><span>Quil Ceda Creek Casino</span></button>
+			<button class="tabs-button purple-button" tabindex="-1"><span>Tulalip Bingo &amp; Slots</span></button>
+    	</div>
+
+
+		<!-- Bottom Wrapper -->
+		<div class="tabs-content-wrapper">
+        	<!-- Bottom Left Block -->
+       		<div class="overflow">
+          	<div class="block-content-wrapper" data-tab="0">
+            <!-- Loop -->
+           
+            <div class="content-wrapper green-content active">
+              <div class="image-wrapper active"> 
+                <img decoding="async" src="https://tulalip.wpenginepowered.com/wp-content/uploads/2024/04/tulalip-resort-casino-1.png.webp" alt="Tulalip Resort Casino"/>
+              </div>
+              <h3 class="tab-headline borderd">Tulalip Resort Casino</h3>
+              <div class="description">
+                <p>Step into a realm of luxury and excitement at the Tulalip Resort Casino. With a world-class spa, gourmet dining options and an extensive range of games, we offer the ultimate getaway for relaxation and entertainment.</p>
+                <p>Ready for the resort experience of a lifetime?</p>
+              </div>
+              <a
+                href="/properties/tulalip-resort-casino/"
+                class="tabs-cta"
+                tabindex="0"
+              >
+                Learn More About Tulalip Resort Casino
+              </a>
+            </div>
+          
+            <div class="content-wrapper red-content">
+              <div class="image-wrapper">
+                <img
+                  decoding="async"
+                  src="https://tulalip.wpenginepowered.com/wp-content/uploads/2024/04/quil-ceda-creek-casino-1.png.webp"
+                  alt="Quil Ceda Creek Casino"
+                />
+              </div>
+              <h3 class="tab-headline borderd">Quil Ceda Creek Casino</h3>
+              <div class="description">
+                <p>
+                  Quil Ceda Creek Casino is where fun meets fabulous. With
+                  lively entertainment, the latest slots and vibrant nightlife,
+                  we guarantee a good time, every time.
+                </p>
+                <p>Looking for unparalleled excitement?</p>
+              </div>
+              <a
+                href="/properties/quil-ceda-creek/"
+                class="tabs-cta"
+                tabindex="-1"
+              >
+                Discover Quil Ceda Creek Casino
+              </a>
+            </div>
+            <div class="content-wrapper purple-content">
+              <div class="image-wrapper">
+                <img
+                  decoding="async"
+                  src="https://tulalip.wpenginepowered.com/wp-content/uploads/2024/04/tulalip-bingo-slots-1.png.webp"
+                  alt="Tulalip Bingo &amp; Slots"
+                />
+              </div>
+              <h3 class="tab-headline borderd">Tulalip Bingo &amp; Slots</h3>
+              <div class="description">
+                <p>
+                  Tulalip Bingo &amp; Slots offers a cozy and friendly
+                  environment for bingo and slot enthusiasts alike. Experience
+                  the thrill of the game in a community that feels like home.
+                </p>
+                <p>Ready to join the fun?</p>
+              </div>
+              <a
+                href="/properties/tulalip-bingo-slots/"
+                class="tabs-cta"
+                tabindex="-1"
+              >
+                Explore Tulalip Bingo &amp; Slots
+              </a>
+            </div>
+
+            <!-- Loop End -->
+          </div>
+        </div>
+
+        <!-- Bottom Right Block -->
+        <div class="overflow">
+          <div class="block-image-wrapper" data-tab="0">
+            <div class="image-wrapper active">
+              <img
+                decoding="async"
+                src="https://tulalip.wpenginepowered.com/wp-content/uploads/2024/04/tulalip-resort-casino-1.png.webp"
+                alt="Tulalip Resort Casino"
+              />
+            </div>
+            <div class="image-wrapper">
+              <img
+                decoding="async"
+                src="https://tulalip.wpenginepowered.com/wp-content/uploads/2024/04/quil-ceda-creek-casino-1.png.webp"
+                alt="Quil Ceda Creek Casino"
+              />
+            </div>
+            <div class="image-wrapper">
+              <img
+                decoding="async"
+                src="https://tulalip.wpenginepowered.com/wp-content/uploads/2024/04/tulalip-bingo-slots-1.png.webp"
+                alt="Tulalip Bingo &amp; Slots"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../dep/jQuery.js"></script>
+    <script>
+      $(".tabs-section").each(function () {
+        var section = $(this);
+        var btn = section.find(".tabs-buttons-wrapper .tabs-button");
+        var contentWrapper = section.find(
+          ".block-content-wrapper > .content-wrapper"
+        );
+        var imageWrapper = section.find(
+          ".block-image-wrapper > .image-wrapper"
+        );
+        // Add active class to the first element of each set on page load
+        if ($(window).width() > 980) {
+          btn.first().addClass("active");
+          contentWrapper.first().addClass("active");
+          imageWrapper.first().addClass("active");
+        }
+        btn.each(function (index) {
+          $(this).on("click", function () {
+            if (!$(this).hasClass("active")) {
+              btn.removeClass("active");
+              $(this).addClass("active");
+              contentWrapper.removeClass("active");
+              imageWrapper.removeClass("active");
+              section.find(".block-content-wrapper").attr("data-tab", index);
+              section.find(".block-image-wrapper").attr("data-tab", index);
+              contentWrapper.eq(index).addClass("active");
+              imageWrapper.eq(index).addClass("active");
+            }
+          });
+        });
+
+        // Tabs Buttons Animation with JS
+        section
+          .find(".tabs-buttons-wrapper .tabs-button")
+          .on("click", function () {
+            var position = $(this).position().left;
+            var width = $(this).outerWidth();
+            section.find(".slider").css({ left: position, width: width });
+          });
+        var actButton = section.find(
+          ".tabs-buttons-wrapper .tabs-button.active"
+        );
+        if (actButton.length > 0) {
+          var actPosition = actButton.position();
+          var actWidth = actButton.outerWidth();
+          section
+            .find(".slider")
+            .css({ left: actPosition.left, width: actWidth });
+        }
+        // Additional code for each tab
+        contentWrapper.each(function (index) {
+          var $button = section
+            .find(".tabs-buttons-wrapper .tabs-button")
+            .eq(index);
+          var $imageBlock = section
+            .find(".block-image-wrapper .image-wrapper")
+            .eq(index);
+          var $clonedButton = $button.clone();
+          var $clonedImage = $imageBlock.clone();
+          $(this).before($clonedButton);
+          $(this).prepend($clonedImage);
+        });
+        // Mobile Toggle Functionality
+        section
+          .find(".block-content-wrapper .content-wrapper")
+          .first()
+          .slideToggle();
+        section
+          .find(".block-content-wrapper .tabs-button")
+          .first()
+          .addClass("active");
+        section
+          .find(".block-content-wrapper .tabs-button")
+          .on("click", function () {
+            $(this).siblings(".tabs-button").removeClass("active");
+            $(this).toggleClass("active");
+            var content = $(this).next(".content-wrapper");
+            section
+              .find(".block-content-wrapper .content-wrapper")
+              .not(content)
+              .slideUp();
+            content.slideToggle();
+          });
+      });
+      if ($(".tabs-section .tabs-buttons-wrapper").length) {
+        var tabScroll;
+        setTimeout(function () {
+          var $tabsWrapper = $(".tabs-section .tabs-buttons-wrapper");
+          $tabsWrapper.children("*").wrapAll('<div class="scroller"></div>');
+
+          tabScroll = new IScroll(".tabs-section .tabs-buttons-wrapper", {
+            eventPassthrough: true,
+            scrollX: true,
+            scrollY: false,
+            preventDefault: false,
+            mouseWheel: false,
+            scrollbars: "custom",
+            interactiveScrollbars: true,
+            shrinkScrollbars: "scale",
+            fadeScrollbars: true,
+          });
+          // document.addEventListener('touchmove', function (e) { e.preventDefault(); }, isPassive() ? {
+          // 	capture: false,
+          // 	passive: false
+          // } : false);
+        }, 500);
+        $(".tabs-section .tabs-button").on("click", function () {
+          if (tabScroll) {
+            var objposition = $(this).position().left;
+            tabScroll.scrollToElement(
+              this,
+              500,
+              -(tabScroll.wrapperWidth / 2 - $(this).width() / 2),
+              0
+            );
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
