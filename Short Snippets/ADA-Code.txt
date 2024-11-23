@@ -1,0 +1,304 @@
+// Code for change simple element to button
+$('.elementor-search-form__toggle, .dialog-close-button').attr({
+    'tabindex': '0',
+    'role': 'button'
+});
+
+// Code for change a tag to button
+$('a[href="#"],a[href=""],[href="javascript:void(0)"]').attr({
+    'role': 'button'
+});
+
+// Code for message for screen reader
+$('[href="#move-down" ]').attr('aria-label', 'Go to next section');
+
+// Code for open link in new tab
+$('a[target="_blank"]').append('<span class="elementor-screen-only">(Open Link in new window)</span>');
+
+// role none for elements
+$('svg, .last, #elementor-device-mode').attr('role', 'none');
+
+// Code for search label
+$('.elementor-search-form__input').attr('aria-label', 'Enter Text for Search');
+
+// Code for change menu to nav
+$('.main-menu').attr('role', 'navigation');
+
+// Code for figure element
+$('figure').each(function(){
+    if($(this).find('img').length>0){
+        var label = $(this).find('img').attr('alt');
+        $(this).attr({'role': 'none', 'alt': label})
+    }
+});
+
+// Code for change p tag to heading
+$('.large-text, .subscribe-wrp .elementor-text-editor p').attr({
+    "role": "heading",
+    "aria-level": "3"
+});
+
+// Code for main role
+$('main').attr({
+    "id": "main",
+    "tabindex": "-1"
+});
+
+// Code for overlay image
+$('.elementor-cta__bg').attr({
+    'role': 'none' 
+});
+
+$('.fab').attr('role', 'presentation');
+$('.sub-arrow').attr('role', 'none');
+
+// if alt attribute empty or not exist.
+// $('img[alt=""], img:not([alt])').attr('alt', 'image with no alt attributes');
+
+// for changing heading level
+$('.latest-content-wrapper h5').attr('aria-level', '3');
+$('.latest-content-wrapper h6').attr('aria-level', '4');
+$('.mccain-event h5').attr('aria-level', '3');
+$('.mccain-event h6').attr('aria-level', '4');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // ada issue fixings
+        $(document).on("elementor/popup/show", function(){
+            $(".dialog-close-button, .elementor-tab-title, .video-thumbnail, .styledSelect, .text-ellipses").attr({
+                'role': 'button',
+                'aria-label': 'Close',
+                'tabindex': '0'
+            });
+           
+            $('.elementor-popup-modal .elementor-text-editor p,.dialog-widget .elementor-text-editor p').attr({
+                "role": "heading",
+                "aria-level": "3"
+            });
+     
+        });
+    $(window).on('load', function(){
+        $('.gchoice input[type=checkbox]').attr({
+            'tabindex': '-1',
+        });
+        $(document).ready(function(){
+            $(".gchoice").focus(function(){               
+                document.body.onkeyup = function(e) {
+                    if (e.key == " " ||
+                        e.code == "Space" ||      
+                        e.keyCode == 32      
+                    ) {
+                        var chk = $(this).find("input[type='checkbox']");
+                        if(chk.is(":checked") == false)
+                        {
+                            chk.prop("checked", true);
+                        }
+                        else
+                        {
+                            chk.prop("checked", false);
+                        }
+                    }
+                    }
+            });
+        });
+
+
+
+        $(".gchoice, .gfield-choice-input, .gchoice label, .video-thumbnail").attr({
+            'tabindex': '0',
+            'role': 'button'
+        });    
+
+        // $(".gchoice input").attr({
+        //     'tabindex': '-1',
+        // });  
+
+        // Code for main role
+        $('main').attr({"id": "main","tabindex": "-1"
+        });
+
+        // role none for elements
+        $('svg, .sub-arrow, .quote-icon, .e-font-icon-svg-symbols, .last, .elementor-screen-only, .schema_code, .e-font-icon-svg-symbols, .elementor-icon-list-icon i').attr({
+             'role': 'none' 
+         });
+
+        // Code for change a tag to button
+        $('a[href="#"],a[href=""],[href="javascript:void(0)"],.step-bar span.elementor-heading-title').attr({
+            'role': 'button'
+        });
+    
+        // Code for open link in new tab
+        $('a[target="_blank"]').append('<span class="elementor-screen-only">(Open Link in new window)</span>');
+        
+        // for changing heading level
+        $('.home-banner .elementor-text-editor p, .hero-without-form .elementor-text-editor p, .step-outter h4').attr({
+            "role": "heading",
+            "aria-level": "2"
+        });
+    
+        $('.filter-dropdown .filter-by').attr({
+            "role": "heading",
+            "aria-level": "3"
+        });
+    
+        $('.building-future-form-wrap .elementor-shortcode h3').attr('aria-level', '5');
+    
+        // Code for main role
+        $('.home-banner, .dialog-close-button, span.elementor-heading-title').attr({
+            'tabindex': '0',
+        });
+    
+        // if alt attribute empty or not exist.
+        $('img[alt=""], img:not([alt])').attr('alt', 'image with no alt attributes');
+    
+        // Code for figure element
+        $('figure').each(function(){
+            if($(this).find('img').length>0){
+                var label = $(this).find('img').attr('alt');
+                $(this).attr({'role': 'none', 'alt': label})
+            }
+        });
+    
+        // Code for overlay image
+        $('.home-banner , .elementor-background-overlay').attr({
+            'role': 'img', 
+            'aria-label': 'overlay image'
+        });
+    });
+    // end of ada issue fixings
+
+
+
+
+
+/* Ada issue fixings */
+@media screen and (min-width: 1024px) {
+	.main-menu:focus-within{
+		overflow: visible;
+	}
+	.elementor-nav-menu li:focus-within >  ul,
+	.elementor-nav-menu li.menu-item-has-children:focus-within > .sub-menu{
+		display: block !important;
+		opacity: 1 !important;
+	}
+	.elementor-nav-menu > li ul > li > a:focus {
+		background-color: #eaedf5;
+		color: #001234;
+	}
+}
+
+<a class="skip-main" href="#main">Skip to main content</a>
+
+a.skip-main {
+    left: -999px;
+    position: absolute;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: -999;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+}
+a.skip-main:focus, a.skip-main:active {
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 2px 2px rgb(0 0 0 / 60%);
+    clip: auto!important;
+    color: #333;
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    height: auto;
+    left: 5px;
+    line-height: normal;
+    padding: 15px 23px 14px;
+    text-decoration: none;
+    top: 5px;
+    width: auto;
+    z-index: 100000;
+}
+.footer-sep,
+.elementor-widget-social-icons.elementor-grid-0 .elementor-widget-container,
+.slider-video .swiper-pagination-bullets{
+	font-size: 11px !important;
+	line-height: 11px;
+}
+.footer-sep{
+	color: rgba(0, 0, 0, 0);
+}
+
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="text"]:focus-visible, 
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="email"]:focus-visible, 
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="tel"]:focus-visible, 
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="checkbox"]:focus-visible, 
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="checkbox"]:focus-visible~label:before, 
+html body .gchoice:focus-visible input[type="checkbox"]~label:before, 
+/* html body .gform_wrapper ul.gfield_checkbox li input:checked~label:before, */
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="number"]:focus-visible, 
+
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="text"]:focus, 
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="email"]:focus, 
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="tel"]:focus, 
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="checkbox"]:focus, 
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="checkbox"]:focus~label:before, 
+/* html body .gform_wrapper ul.gfield_checkbox li input:checked~label:before, */
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="number"]:focus-within, 
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="text"]:focus-within, 
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="email"]:focus-within, 
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="tel"]:focus-within, 
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="checkbox"]:focus-within, 
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="checkbox"]:focus-within~label:before, 
+html body .gchoice:focus-within input[type="checkbox"]~label:before, 
+/* html body .gform_wrapper ul.gfield_checkbox li input:checked~label:before, */
+html body .gform_wrapper form ul.gform_fields li.gfield input[type="number"]:focus-within {
+    background-color:#eee;
+	border: 1px solid #000 !important;
+	box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
+.elementor-main-swiper .swiper-slide:focus,
+.elementor-main-swiper .swiper-slide:focus-within,
+.building-future-form-wrap .gform_wrapper form .gform_footer input[type="submit"]:focus,
+.building-future-form-wrap .gform_wrapper form .gform_footer input[type="submit"]:focus-within,
+html body .gform_wrapper form ul.gform_fields li.gfield > a:focus,
+html body .gform_wrapper form ul.gform_fields li.gfield > a:focus-within,
+.slider-video .swiper-pagination-bullets .swiper-pagination-bullet:focus-within,
+.slider-video .swiper-pagination-bullets .swiper-pagination-bullet:focus{
+		border: 1px solid #000 !important;
+}
+
+.styledSelect:focus-within,
+.styledSelect:focus-visible,
+.styledSelect:focus {
+    border: 2px solid #a65d43;
+}
+.elementor-icon-list-item > a:focus{
+	outline: 1px solid #000 !important;
+}
+/* .styledSelect:focus-within + ul.options,
+.styledSelect:focus-visible + ul.options,
+.styledSelect:focus + ul.options{
+	display: block !important;
+} */
+/* end of Ada issue fixings */
