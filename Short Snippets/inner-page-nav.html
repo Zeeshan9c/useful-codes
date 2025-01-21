@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <!-- https://barrownew2024.wpenginepowered.com/womens-board-of-barrow-neurological-foundation/ -->
+    <script>
+        /**Women header*/
+		$('.women-menu-button').on('click', function(){
+			$('.women-menu-col').slideToggle();
+			$('body').toggleClass('open-women-menu overflow-hide');
+		})
+
+		$('.women-board-header .women-board-menu ul li:first-child a').addClass('active-nav');
+
+		$('.women-board-header .women-board-menu ul li a').on('click', function (x) {
+			x.preventDefault();
+			$('.women-board-header .women-board-menu ul li a').removeClass('active-nav');
+			$(this).addClass('active-nav');
+
+			isAnimating = true; 
+			isManualClick = true;
+
+			const targetTabId = $(this).attr('href');
+			const $targetSection = $(targetTabId);
+			if (!$targetSection.length) return;
+
+			const adminbarHeight = $('#wpadminbar').outerHeight() || 0;
+			const headerHeight = $('.elementor-location-header').outerHeight() || 0;
+			const totalOffset = adminbarHeight + headerHeight;
+			const targetPos = $targetSection.offset().top - totalOffset + 1;
+			
+			$('html, body').animate({ scrollTop: targetPos }, function () {
+				isAnimating = false; 
+				isManualClick = false;
+				// activateNavItem(targetTabId.replace('#', ''));
+				// updateBgSlide();
+			});
+
+			if (window.matchMedia("(max-width: 1024px)").matches) {
+				$('.women-menu-col').slideUp();
+				$('body').removeClass('open-women-menu overflow-hide');
+			}
+	
+		});
+	
+		function updateActiveNavOnScroll() {
+			var scrollPos = $(document).scrollTop();
+			var headerHeight = $('.elementor-location-header').height() || 0;
+			var adminBarHeight = $('#wpadminbar').height() || 0;
+			var offsetAdjustment = headerHeight + adminBarHeight;
+	
+			$('.women-board-header .women-board-menu ul li a').each(function () {
+				var sectionId = $(this).attr('href');
+				if ($(sectionId).length) {
+					var sectionOffset = $(sectionId).offset().top - offsetAdjustment;
+					var sectionHeight = $(sectionId).outerHeight();
+	
+					if (scrollPos >= sectionOffset && scrollPos < sectionOffset + sectionHeight) {
+						$('.women-board-header .women-board-menu ul li a').removeClass('active-nav');
+						$(this).addClass('active-nav');
+					}
+				}
+			});
+		}
+	
+		$(window).on('scroll', updateActiveNavOnScroll);
+		updateActiveNavOnScroll();
+    </script>
+</body>
+</html>
