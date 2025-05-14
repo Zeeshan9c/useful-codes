@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background: gray;
+        }
+        .gallery {
+	width: 100%;
+  }
+  
+  .gallery-container {
+	align-items: center;
+	display: flex;
+	height: 301px;
+	margin: 0 auto;
+	max-width: 740px;
+	position: relative;
+	}
+  
+  .gallery-item {
+	height: 180.81px;
+	/* opacity: .4; */
+	position: absolute;
+	transition: all 0.3s ease-in-out;
+	width: 177px;
+	z-index: 0;
+	}
+  
+  .gallery-item.gallery-item-selected {
+	/* box-shadow: 0 0 30px rgba(255, 255, 255, 0.6), 0 0 60px rgba(255, 255, 255, 0.45), 0 0 110px rgba(255, 255, 255, 0.25), 0 0 100px rgba(255, 255, 255, 0.1); */
+	height: 300px;
+	opacity: 1;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 363px;
+	z-index: 2;
+	}
+  
+  .gallery-item.gallery-item-previous,
+  .gallery-item.gallery-item-next {
+	height: 200px;
+	opacity: 1;
+	width: 255px;
+	z-index: 1;
+	}
+  
+  .gallery-item.gallery-item-previous {
+	left: 26%;
+	transform: translateX(-50%);
+	cursor: pointer;
+	}
+  
+  .gallery-item.gallery-item-next {
+	left: 74%;
+	transform: translateX(-50%);
+	cursor: pointer;
+	}
+  
+	.gallery-item.gallery-item-first {
+		left: 13.7%;
+		transform: translateX(-50%);
+		width: 196px;
+		cursor: pointer;
+	}
+  
+  .gallery-item.gallery-item-last {
+	left: 86.5%;
+	transform: translateX(-50%);
+	cursor: pointer;
+	}
+  
+  .gallery-controls {
+	display: flex;
+    justify-content: space-between;
+    margin: 0;
+    position: absolute;
+    top: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 354px;
+    max-width: 100%;
+	z-index: 10;
+  }
+  .coverflow-text-wrapper{
+	position: relative;
+  }
+  
+  .gallery-controls button {
+	border: 0;
+	cursor: pointer;
+	font-size: 16px;
+	padding: 0 12px;
+	text-transform: capitalize;
+	width: 0;
+	text-indent: -9999px;
+	overflow: hidden;
+	white-space: nowrap;
+  }
+  
+  .gallery-controls button:focus {
+	outline: none;
+  }
+  
+  body div.gallery-controls button.gallery-controls-previous {
+	position: relative;
+	border: 0;
+	background-color: transparent;
+	background-image: url('/themes/custom/sanmanuel/images/arrow-bet-left.svg') !important;
+	background-position: center !important;
+	background-repeat: no-repeat !important;
+  }
+  
+  
+  body div.gallery-controls button.gallery-controls-next {
+	position: relative;
+	border: 0;
+	background-image: url('/themes/custom/sanmanuel/images/arrow-bet.svg') !important;
+	background-position: center !important;
+	background-repeat: no-repeat !important;
+	background-color: transparent;
+  }
+  
+ 
+  
+  .gallery-nav {
+	bottom: -15px;
+	justify-content: center;
+	list-style: none;
+	padding: 0;
+	position: absolute;
+	width: 100%;
+	display: none;
+  }
+  
+  .gallery-nav li {
+	background: #ccc;
+	border-radius: 50%;
+	height: 10px;
+	margin: 0 16px;
+	width: 10px;
+  }
+  
+  .gallery-nav li.gallery-item-selected {
+	background: #555;
+  }
+
+  .ycs-card-blocks .ycs-slide-data:not(.active-slide-club),
+    .coverflow-text-inner .swiper-content:not(.active-content){
+        display: none
+    }
+
+    .gallery-controls button{
+        background: red !important;
+        height: 30px;
+        width: 30px
+    }
+    </style>
+</head>
+<body>
+    <div class="ycs-club-slider-wrapper">
+        <div class="container-fluid">
+            <div class="gallery">
+                <div class="gallery-container">
+                    <img class="gallery-item" src="https://www.yaamava.com/sites/default/files/styles/webp/public/2023-09/Club_Serrano_Diamond_7300x5000_UPDATED.png.webp?itok=gWJ7SiQz" alt="Diamond" tabindex="0" role="button">
+                    <img class="gallery-item" src="https://www.yaamava.com/sites/default/files/styles/webp/public/2023-09/Club_Serrano_Turquoise_7300x5000_UPDATED2.png.webp?itok=gZNEjhlm" alt="Turquoise" tabindex="0" role="button">
+                    <img class="gallery-item" src="https://www.yaamava.com/sites/default/files/styles/webp/public/2023-09/Club_Serrano_Classic_7300x5000_UPDATED.png.webp?itok=HbC2qpZG" alt="Classic">
+                    <img class="gallery-item" src="https://www.yaamava.com/sites/default/files/styles/webp/public/2023-09/Club_Serrano_Emerald_7300x5000_UPADTED.png.webp?itok=-6a9K8KZ" alt="Emerald" tabindex="0" role="button">
+                    <img class="gallery-item" src="https://www.yaamava.com/sites/default/files/styles/webp/public/2023-09/Club_Serrano_Amber_7300x5000_UPDATED%201.png.webp?itok=L_LRY1zx" alt="Amber" tabindex="0" role="button">
+                </div>
+            </div>
+            <div class="coverflow-text-wrapper">
+                <div class="gallery-controls">
+                    <!-- <button class="gallery-controls-previous" tabindex="0" role="button">previous</button> -->
+                    <!-- <button class="gallery-controls-next" tabindex="0" role="button">next</button> -->
+                </div>
+                <div class="coverflow-text-inner">
+                    <div class="swiper-content active-content" data-index="0">
+                        <h3 aria-level="2">Diamond</h3>
+                        <p>250K+ Tier Points</p>
+                    </div>
+                    <div class="swiper-content" data-index="1">
+                        <h3 aria-level="2">Turquoise</h3>
+                        <p>Invitation Only</p>
+                    </div>
+                    <div class="swiper-content" data-index="2">
+                        <h3 aria-level="2">Classic</h3>
+                        <p>0-49,999 Tier Points</p>
+                    </div>
+                    <div class="swiper-content" data-index="3">
+                        <h3 aria-level="2">Emerald</h3>
+                        <p>50K-124,999 Tier Points</p>
+                    </div>
+                    <div class="swiper-content" data-index="4">
+                        <h3 aria-level="2">Amber</h3>
+                        <p>125K-249,999 Tier Points</p>
+                    </div>
+                </div>
+            </div>
+            <div class="ycs-card-blocks">
+                <div class="ycs-slide-data active-slide-club" data-index="0" data-slideindex="0">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Yaamava" src="https://www.yaamava.com/sites/default/files/2024-07/yaamva-white-logo_0.svg">
+                            </div>
+                            <h3 aria-level="2">Yaamava’ Exclusive Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li><span>Priority Access at Restaurants and Cage Cashiers</span></li>
+                                    <li>Entry Multiplier for Select Promotions</li>
+                                    <li>20% Hotel, Dining and Retail Shop Discounts</li>
+                                    <li>Free Monthly 25,000 Virtual Coins for Yaamava’ Play Online</li>
+                                    <li>No Check Cashing Fee</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Yaamava Palms" src="https://www.yaamava.com/sites/default/files/2024-07/yaamava-plam-logo-white.svg">
+                            </div>
+                            <h3 aria-level="2">Joint Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li>6X Earned Rewards Multiplier</li>
+                                    <li>Priority Access at Service Desk</li>
+                                    <li>Priority Reservations for Property Amenities through VIP Host or VIP Services</li>
+                                    <li>Invitations to Exclusive Casino Events &amp; Tournaments</li>
+                                    <li>Free Self-Parking, VIP Parking, Free Valet</li>
+                                    <li>Access to Entertainment Ticket Pre-Sales for Select Shows</li>
+                                    <li>Room Upgrades (based on availability and play)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Palms" src="https://www.yaamava.com/sites/default/files/2024-07/palms-logo-white.svg">
+                            </div>
+                            <h3 aria-level="2">Palms Exclusive Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li>Discounted Movie Tickets at Brenden Theatres @ Palms</li>
+                                    <li>Free Valet</li>
+                                    <li>Dedicated Hotel Reservation Line</li>
+                                    <li>Comped Resort Fee</li>
+                                    <li>Priority Access at A.Y.C.E. Buffet</li>
+                                    <li>VIP Lounge Access for Hotel Check-in</li>
+                                    <li>Premium Seating at Select Shows (based on availability and play)</li>
+                                    <li>Early Hotel Check-in/Late Hotel Check-out (Based on availability and play)</li>
+                                    <li><span>20% off cash purchases AND when using Earned Rewards at 1891 Boutique (Entire Store), Stuff I Forgot (Apparel Only), and Palms Place (Apparel Only)</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ycs-slide-data" data-index="1" data-slideindex="1">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Yaamava" src="https://www.yaamava.com/sites/default/files/2024-07/yaamva-white-logo.svg">
+                            </div>
+                            <h3 aria-level="2">Yaamava’ Exclusive Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li><span>Priority Access at Restaurants and Cage Cashiers</span></li>
+                                    <li>Entry Multiplier for Select Promotions</li>
+                                    <li>25% Hotel, Dining and Retail Shop Discounts</li>
+                                    <li>Free Monthly 30,000 Virtual Coins for Yaamava’ Play Online</li>
+                                    <li>No Check Cashing Fee</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Yaamava Palms" src="https://www.yaamava.com/sites/default/files/2024-07/yaamava-plam-logo-white.svg">
+                            </div>
+                            <h3 aria-level="2">Joint Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li>8X Earned Rewards Multiplier</li>
+                                    <li>Priority Access at Service Desk</li>
+                                    <li>Priority Reservations for Property Amenities through VIP Host or VIP Services</li>
+                                    <li>Invitations to Exclusive Casino Events &amp; Tournaments</li>
+                                    <li>Free Self-Parking, VIP Parking, Free Priority Valet Service</li>
+                                    <li>Access to Entertainment Ticket Pre-Sales for Select Shows</li>
+                                    <li>Room Upgrades (based on availability and play)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Palms" src="https://www.yaamava.com/sites/default/files/2024-07/palms-logo-white.svg">
+                            </div>
+                            <h3 aria-level="2">Palms Exclusive Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li>25% Discounted Movie Tickets at Brenden Theatres @ Palms</li>
+                                    <li>Free Valet</li>
+                                    <li>Dedicated Hotel Reservation Line</li>
+                                    <li>Comped Resort Fee</li>
+                                    <li>Priority Access at A.Y.C.E. Buffet</li>
+                                    <li>VIP Lounge Access for Hotel Check-in</li>
+                                    <li>Premium Seating at Select Shows (based on availability and play)</li>
+                                    <li>Early Hotel Check-in/Late Hotel Check-out (Based on availability and play)</li>
+                                    <li><span>25% off cash purchases AND when using Earned Rewards at 1891 Boutique (Entire Store), Stuff I Forgot (Apparel Only), and Palms Place (Apparel Only)&nbsp;</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ycs-slide-data" data-index="2" data-slideindex="2">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Yaamava" src="https://www.yaamava.com/sites/default/files/2024-07/yaamva-white-logo.svg">
+                            </div>
+                            <h3 aria-level="2">Yaamava’ Exclusive Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li>10% Hotel, Dining and Retail Shop Discounts</li>
+                                    <li>Free Monthly 10,000 Virtual Coins for Yaamava’ Play Online</li>
+                                    <li>4% Check Cashing Fee</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Yaamava Palms" src="https://www.yaamava.com/sites/default/files/2024-07/yaamava-plam-logo-white.svg">
+                            </div>
+                            <h3 aria-level="2">Joint Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li>Invitations to Exclusive Casino Events &amp; Tournaments</li>
+                                    <li>Free Self-Parking</li>
+                                    <li>Access to Entertainment Ticket Pre-Sales for Select Shows</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Palms" src="https://www.yaamava.com/sites/default/files/2024-07/palms-logo-white.svg">
+                            </div>
+                            <h3 aria-level="2">Palms Exclusive Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li>Discounted Movie Tickets at Brenden Theatres @ Palms</li>
+                                    <li>Free Valet</li>
+                                    <li><span>10% off cash purchases at 1891 Boutique (Entire Store), Stuff I Forgot (Apparel Only), and Palms Place (Apparel Only)</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ycs-slide-data" data-index="3" data-slideindex="3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Yaamava" src="https://www.yaamava.com/sites/default/files/2024-07/yaamva-white-logo.svg">
+                            </div>
+                            <h3 aria-level="2">Yaamava’ Exclusive Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li>Entry Multiplier for Select Promotions</li>
+                                    <li>15% Hotel, Dining and Retail Shop Discounts</li>
+                                    <li>Free Monthly 15,000 Virtual Coins for Yaamava’ Play Online</li>
+                                    <li>2% Check Cashing Fee</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Yaamava Palms" src="https://www.yaamava.com/sites/default/files/2024-07/yaamava-plam-logo-white.svg">
+                            </div>
+                            <h3 aria-level="2">Joint Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li>4X Earned Rewards Multiplier</li>
+                                    <li>Invitations to Exclusive Casino Events &amp; Tournaments</li>
+                                    <li>Free Self-Parking</li>
+                                    <li>Access to Entertainment Ticket Pre-Sales for Select Shows</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Palms" src="https://www.yaamava.com/sites/default/files/2024-07/palms-logo-white.svg">
+                            </div>
+                            <h3 aria-level="2">Palms Exclusive Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li>Discounted Movie Tickets at Brenden Theatres @ Palms</li>
+                                    <li>Free Valet</li>
+                                    <li>Dedicated Hotel Reservation Line</li>
+                                    <li><span>15% off cash purchases at 1891 Boutique (Entire Store), Stuff I Forgot (Apparel Only), and Palms Place (Apparel Only)&nbsp;</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ycs-slide-data" data-index="4" data-slideindex="4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Yaamava" src="https://www.yaamava.com/sites/default/files/2024-07/yaamva-white-logo.svg">
+                            </div>
+                            <h3 aria-level="2">Yaamava’ Exclusive Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li>Entry Multiplier for Select Promotions</li>
+                                    <li>15% Hotel, Dining and Retail Shop Discounts</li>
+                                    <li>Free Monthly 20,000 Virtual Coins for Yaamava’ Play Online</li>
+                                    <li>1% Check Cashing Fee</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Yaamava Palms" src="https://www.yaamava.com/sites/default/files/2024-07/yaamava-plam-logo-white.svg">
+                            </div>
+                            <h3 aria-level="2">Joint Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li>5X Earned Rewards Multiplier</li>
+                                    <li>Invitations to Exclusive Casino Events &amp; Tournaments</li>
+                                    <li>Free Self-Parking</li>
+                                    <li>Access to Entertainment Ticket Pre-Sales for Select Shows</li>
+                                    <li>Room Upgrades (based on availability and play)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="ycs-club-icon ">
+                                <img width="25" height="25" alt="Palms" src="https://www.yaamava.com/sites/default/files/2024-07/palms-logo-white.svg">
+                            </div>
+                            <h3 aria-level="2">Palms Exclusive Rewards</h3>
+                            <div class="ycs-club-content">
+                                <ul>
+                                    <li>Discounted Movie Tickets at Brenden Theatres @ Palms</li>
+                                    <li>Free Valet</li>
+                                    <li>Dedicated Hotel Reservation Line</li>
+                                    <li>Comped Resort Fee</li>
+                                    <li><span>15% off cash purchases at 1891 Boutique (Entire Store), Stuff I Forgot (Apparel Only), and Palms Place (Apparel Only)</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ycs-desclaimer-cta-section">
+                <p><em><span>All our tiers include converting slot points to Free Play, invitations to exclusive events and tournaments, and free monthly virtual coins to Play Online.</span></em>
+                    <br><em><span>Earned Rewards can pay your balance at any food, retail or entertainment venue.</span></em></p>
+                <div class="ycs-btn-wrapper">
+                    <a href="/club-serrano#join-the-club" class="brown btn " target="_self">Join the Club</a>
+                </div>
+                <div class="view-after-cta">
+                    <a href="#club-serrano-rules" tabindex="0" role="button">View Club Serrano Rules</a>
+                </div>
+            </div>
+        </div>
+    </div>  
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        const galleryContainer = document.querySelector('.gallery-container');
+const galleryControlsContainer = document.querySelector('.gallery-controls');
+const galleryControls = ['previous', 'next'];
+const galleryItems = document.querySelectorAll('.gallery-item');
+
+class Carousel {
+  constructor(container, items, controls) {
+    this.carouselContainer = container;
+    this.carouselControls = controls;
+    this.carouselArray = [...items];
+  }
+
+  // Assign initial css classes for gallery and nav items
+  setInitialState() {
+    this.carouselArray[0].classList.add('gallery-item-first');
+    this.carouselArray[1].classList.add('gallery-item-previous');
+    this.carouselArray[2].classList.add('gallery-item-selected');
+    this.carouselArray[3].classList.add('gallery-item-next');
+    this.carouselArray[4].classList.add('gallery-item-last');
+
+    document.querySelector('.gallery-nav').childNodes[0].className = 'gallery-nav-item gallery-item-first';
+    document.querySelector('.gallery-nav').childNodes[1].className = 'gallery-nav-item gallery-item-previous';
+    document.querySelector('.gallery-nav').childNodes[2].className = 'gallery-nav-item gallery-item-selected';
+    document.querySelector('.gallery-nav').childNodes[3].className = 'gallery-nav-item gallery-item-next';
+    document.querySelector('.gallery-nav').childNodes[4].className = 'gallery-nav-item gallery-item-last';
+  }
+
+  // Update the order state of the carousel with css classes
+  setCurrentState(target, selected, previous, next, first, last) {
+    selected.forEach(el => {
+      el.classList.remove('gallery-item-selected');
+
+      if (target.className == 'gallery-controls-previous') {
+        el.classList.add('gallery-item-next');
+      } else {
+        el.classList.add('gallery-item-previous');
+      }
+    });
+
+    previous.forEach(el => {
+      el.classList.remove('gallery-item-previous');
+
+      if (target.className == 'gallery-controls-previous') {
+        el.classList.add('gallery-item-selected');
+		var diff = jQuery(el).index();
+		jQuery('.swiper-content').removeClass('active-content');
+		jQuery('.swiper-content').eq(diff).addClass('active-content');
+		jQuery('.slide-data, .ycs-slide-data').removeClass('active-slide-club');
+		jQuery('.slide-data, .ycs-slide-data').eq(diff).addClass('active-slide-club');
+      } else {
+        el.classList.add('gallery-item-first');
+      }
+    });
+
+    next.forEach(el => {
+      el.classList.remove('gallery-item-next');
+
+      if (target.className == 'gallery-controls-previous') {
+        el.classList.add('gallery-item-last');
+      } else {
+        el.classList.add('gallery-item-selected');
+        // console.log($(el).index());
+		var diff = jQuery(el).index();
+		jQuery('.swiper-content').removeClass('active-content');
+		jQuery('.swiper-content').eq(diff).addClass('active-content');
+		jQuery('.slide-data, .ycs-slide-data').removeClass('active-slide-club');
+		jQuery('.slide-data, .ycs-slide-data').eq(diff).addClass('active-slide-club');
+      }
+    });
+
+    first.forEach(el => {
+      el.classList.remove('gallery-item-first');
+
+      if (target.className == 'gallery-controls-previous') {
+        el.classList.add('gallery-item-previous');
+      } else {
+        el.classList.add('gallery-item-last');
+      }
+    });
+
+    last.forEach(el => {
+      el.classList.remove('gallery-item-last');
+
+      if (target.className == 'gallery-controls-previous') {
+        el.classList.add('gallery-item-first');
+      } else {
+        el.classList.add('gallery-item-next');
+      }
+    });
+  }
+
+  // Construct the carousel navigation
+  setNav() {
+    galleryContainer.appendChild(document.createElement('ul')).className = 'gallery-nav';
+
+    this.carouselArray.forEach(item => {
+      const nav = galleryContainer.lastElementChild;
+      nav.appendChild(document.createElement('li'));
+    }); 
+  }
+
+  // Construct the carousel controls
+  setControls() {
+    this.carouselControls.forEach(control => {
+      galleryControlsContainer.appendChild(document.createElement('button')).className = `gallery-controls-${control}`;
+    }); 
+
+    !!galleryControlsContainer.childNodes[0] ? galleryControlsContainer.childNodes[0].innerHTML = this.carouselControls[0] : null;
+    !!galleryControlsContainer.childNodes[1] ? galleryControlsContainer.childNodes[1].innerHTML = this.carouselControls[1] : null;
+  }
+ 
+  // Add a click event listener to trigger setCurrentState method to rearrange carousel
+  useControls() {
+    const triggers = [...galleryControlsContainer.childNodes];
+
+    triggers.forEach(control => {
+      control.addEventListener('click', () => {
+        const target = control;
+        const selectedItem = document.querySelectorAll('.gallery-item-selected');
+        const previousSelectedItem = document.querySelectorAll('.gallery-item-previous');
+        const nextSelectedItem = document.querySelectorAll('.gallery-item-next');
+        const firstCarouselItem = document.querySelectorAll('.gallery-item-first');
+        const lastCarouselItem = document.querySelectorAll('.gallery-item-last');
+
+        this.setCurrentState(target, selectedItem, previousSelectedItem, nextSelectedItem, firstCarouselItem, lastCarouselItem);
+      });
+    });
+  }
+}
+if(galleryContainer !== undefined && galleryContainer !== null && galleryContainer){
+	const exampleCarousel = new Carousel(galleryContainer, galleryItems, galleryControls);
+
+	exampleCarousel.setControls();
+	exampleCarousel.setNav();
+	exampleCarousel.setInitialState();
+	exampleCarousel.useControls();
+}
+    </script>
+</body>
+</html>
