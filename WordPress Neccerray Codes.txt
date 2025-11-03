@@ -1,0 +1,432 @@
+/***
+* Code Custom Search
+****************************************************** */
+function azb_custom_search_shortcode() {
+	ob_start();
+	?>
+	<form role="search" class="azb-custom-search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">  
+		<input type="search" class="search-field" placeholder="Search…" value="<?php echo get_search_query(); ?>" name="s" autocomplete="off" />
+		<button type="submit" class="search-submit"><span class="elementor-button-content-wrapper">Search</span></button>
+	</form>
+	<?php
+	return ob_get_clean();
+}
+add_shortcode('azb_custom_search', 'azb_custom_search_shortcode');
+
+
+/***
+* Shortcode Current Year
+****************************************************** */
+if (!function_exists('azboardwalk_current_year_shortcode')) {
+	/**
+	 * Get the current year.
+	 *
+	 * @return string
+	 */
+	function azboardwalk_current_year_shortcode() {
+		return date("Y");
+	}
+}
+
+add_shortcode('azboardwalk_current_year', 'azboardwalk_current_year_shortcode');
+
+
+/***
+* Hide counts in dropdown facet
+****************************************************** */
+add_filter('facetwp_facet_dropdown_show_counts', '__return_false');
+
+
+/***
+* Facet main Query
+****************************************************** */
+function sp_custom_facetwp_query($is_main_query, $query) {
+	if ($query -> is_home() || $query -> is_main_query()) {
+		$is_main_query = false;
+	}
+	return $is_main_query;
+}
+add_filter('facetwp_is_main_query', 'sp_custom_facetwp_query', 10, 2);
+
+/***
+* Use Archive Template for FacetWP Results
+****************************************************** */
+add_filter('facetwp_template_use_archive', '__return_true');
+
+
+/* ***
+* JS Code for facet Pagination 
+* The responsive pagination for FacetWP's Pager JS.
+****************************************************** */
+//window resize and load function
+$(window).on('resize load', function () {
+	// Check if the screen size is less than 400 pixels
+	azb_responsive_pagination();
+});
+
+$(document).on('facetwp-loaded', function (e) {
+	if (FWP.loaded) {
+		if ($('.facetwp-scroll-top').length) {
+			$('html,body').animate({
+				scrollTop: $('.facetwp-scroll-top').offset().top - $('.elementor-location-header').height() + 10
+			});
+		}
+	}
+	// Facet Scroll to Top Code on Refresh
+	if (FWP.enable_scroll == true) {
+		var topbar = 0;
+		if ($('html #wpadminbar').length > 0) {
+			topbar = $('html #wpadminbar').height();
+		}
+		$('html,body').animate({
+			scrollTop: $('.facetwp-scroll-top').offset().top - $('.elementor-location-header').height() - topbar
+		});
+	}
+
+	azb_responsive_pagination();
+})
+
+function azb_pagination(mb_limit, mb_endpoints_limit, dk_limit, dk_endpoints_limit) {
+	// target container
+	let container = '.facetwp-pager';
+	// exist if facetwp not on the page
+	if (!$(container).length) {
+		return;
+	}
+	let mb_hide_class = 'azb-hide-page-mb';
+	let dk_hide_class = 'azb-hide-page-dk';
+	// dots markup
+	let dots_start = '<a role="none" class="facetwp-page dots start ' + mb_hide_class + ' ' + dk_hide_class + '">...</a>';
+	let dots_end = '<a role="none" class="facetwp-page dots end ' + mb_hide_class + ' ' + dk_hide_class + '">...</a>';
+	// ----------------------------------------------------
+	let total_pages = parseInt($(container + ' a.facetwp-page.last').attr('data-page'));
+	let active_page = parseInt($(container + ' a.facetwp-page.active').attr('data-page'));
+	// check if the current page is an endpoint
+	let is_endpoint_page = (active_page === 1 || active_page === total_pages) ? true : false;
+	let mb_range_start = is_endpoint_page ? active_page - mb_endpoints_limit : active_page - mb_limit;
+	let mb_range_end = is_endpoint_page ? active_page + mb_endpoints_limit : active_page + mb_limit;
+	let dk_range_start = is_endpoint_page ? active_page - dk_endpoints_limit : active_page - dk_limit;
+	let dk_range_end = is_endpoint_page ? active_page + dk_endpoints_limit : active_page + dk_limit;
+	let dots_mb_start, dots_mb_end, dots_dk_start, dots_dk_end = false;
+	// ----------------------------------------------------
+	$(container + ' .dots').remove();
+	$(container + ' a.facetwp-page:not(.prev, .next)').removeClass(mb_hide_class + ' ' + dk_hide_class);
+	// loop over all the page numbers, excluding 'previous' and 'next' elements
+	$(container + ' a.facetwp-page:not(.active, .prev, .next, [data-page="1"], [data-page="' + total_pages + '"])').each(function (i, obj) {
+		let current_page = $(this).attr('data-page');
+		if (current_page < mb_range_start) {
+			$(this).addClass(mb_hide_class);
+			dots_mb_start = true;
+		}
+		if (current_page > mb_range_end) {
+			$(this).addClass(mb_hide_class);
+			dots_mb_end = true;
+		}
+		if (current_page < dk_range_start) {
+			$(this).addClass(dk_hide_class);
+			dots_dk_start = true;
+		}
+		if (current_page > dk_range_end) {
+			$(this).addClass(dk_hide_class);
+			dots_dk_end = true;
+		}
+	});
+
+	// add dots element - start
+	if (dots_mb_start || dots_dk_start) {
+		$(container + ' a.facetwp-page[data-page="1"]').after(dots_start);
+		if (dots_mb_start) {
+			$(container + ' .dots.start').removeClass(mb_hide_class);
+		}
+		if (dots_dk_start) {
+			$(container + ' .dots.start').removeClass(dk_hide_class);
+		}
+	}
+
+	// add dots element - end
+	if (dots_mb_end || dots_dk_end) {
+		$(container + ' a.facetwp-page[data-page="' + total_pages + '"]').before(dots_end);
+		if (dots_mb_end) {
+			$(container + ' .dots.end').removeClass(mb_hide_class);
+		}
+		if (dots_dk_end) {
+			$(container + ' .dots.end').removeClass(dk_hide_class);
+		}
+	}
+	active_page = active_page ? active_page : 1;
+	total_pages = total_pages ? total_pages : 1;
+	$('.azb-total-page-counter span.azb-current-page').html(active_page);
+	$('.azb-total-page-counter span.azb-total-page').html(total_pages);
+}
+
+// Update the pagination responsively.
+function azb_responsive_pagination() {
+
+	if (window.innerWidth < 480) {
+		azb_pagination(0, 0, 0, 0);
+	}
+	// Check if the screen size is between 400 and 767 pixels
+	else if (window.innerWidth >= 481 && window.innerWidth <= 767) {
+		azb_pagination(1, 1, 1, 1);
+
+	}
+	// Check if the screen size is bigger than 767 pixels
+	else {
+		azb_pagination(1, 1, 1, 2);
+	}
+}
+
+$(document).on('facetwp-refresh', function () {
+	if (FWP.soft_refresh == true) {
+		FWP.enable_scroll = true;
+	} else {
+		FWP.enable_scroll = false;
+	}
+	azb_responsive_pagination();
+});
+
+
+
+/** ***
+* jQuery Boilerplate
+*********************************************** */
+(function ($) {
+
+	var adminbar = 0;
+	if ($('#wpadminbar').length) {
+		adminbar = $('#wpadminbar').height();
+	}
+
+	// Scroll Top Nav Items whaich has targetd item are ID's
+	$(document).on('click', 'a[href*="#"]:not(.skip-main)', function (e) {
+		// Check if the href is on the same page
+		if (this.pathname == window.location.pathname) {
+			e.stopImmediatePropagation();
+			e.preventDefault();
+			// let headerHeight = $('header').height();
+			let headerHeight = $('header').height();
+			let targetId = $(this).attr('href').split('#')[1];
+			let targetElement = $('#' + targetId);
+			if (targetElement.length) {
+				$('html, body').animate({
+					scrollTop: targetElement.offset().top - headerHeight
+				}, 500);
+			}
+		}
+	});
+
+	//smoothscroll
+	$('a[href^= "#"]').on('click', function (x) {
+		x.stopImmediatePropagation();
+		x.preventDefault();
+		$(document).off("scroll");
+
+		// target element id
+		var id = $(this).attr('href');
+
+		// target element
+		var $id = $(id);
+		if ($id.length === 0) {
+			return;
+		}
+
+		// prevent standard hash navigation (avoid blinking in IE)
+		x.preventDefault();
+
+		// top position relative to the document
+		var pos = $id.offset().top - adminbar - $('.elementor-location-header').height();
+
+		// animated top scrolling
+		$('body, html').animate({ scrollTop: pos });
+	});
+
+	$(document).ready(function () {
+
+
+
+		// Toggle search visibility
+		function toggleSearch(show) {
+			$('body').toggleClass('show-search', show);
+			// if (window.matchMedia("(max-width: 767px)").matches) {
+			// 	// $('.search-wrapper').stop(true, true)[show ? 'slideDown' : 'slideUp']();
+			// 	$('.search-wrapper').stop(true, true)[show ? 'fadeIn' : 'fadeOut']();
+
+			// }
+			if (show) setTimeout(() => $(".search-wrapper form input").focus(), 100);
+		}
+		// Event handler for click and Enter key
+		$('.search-icon .elementor-icon').on('click keypress', function (e) {
+			if (e.type === 'click' || e.key === 'Enter') toggleSearch(true);
+		});
+		$('.search-close .elementor-icon').on('click keypress', function (e) {
+			if (e.type === 'click' || e.key === 'Enter') toggleSearch(false);
+		});
+
+		var $buttons = $('.elementor-widget-button a.elementor-button');
+		if ($buttons.length) {
+			$buttons.each(function () {
+				var href = $(this).attr('href');
+				if (href && href.startsWith('http') && !href.includes(window.location.hostname)) {
+					$(this).addClass('azb_external_link');
+				}
+			});
+		}
+
+
+	}); // Ready Ends
+
+
+
+	/* ** 
+	*  Offset Calculator 
+	*********************************** */
+	function updateActBasicsHeight() {
+		if (!$('.azb_is_transform').length) return;
+		if (window.matchMedia("(min-width: 1025px)").matches) {
+			$('.azb_is_transform').each(function () {
+				var $this = $(this);
+				var height = $this.find('.azb_transform_body').outerHeight() || 0;
+				var paddingBottom = parseInt($this.find('.azb_transform_block').css('padding-bottom')) || 0;
+
+				var totalOffset = height + (paddingBottom / 2);
+
+				$this.find('.azb_transform_block').css('--act-offset', + totalOffset + 'px');
+				$this.css('--act-offset', + totalOffset + 'px');
+			});
+		} else {
+			$('.azb_is_transform').each(function () {
+				var $this = $(this);
+				$this.find('.azb_transform_block').css('--act-offset', '');
+				$this.css('--act-offset', '');
+			});
+		}
+	}
+	$(window).on('load resize', updateActBasicsHeight);
+
+
+
+	// Mega Menu Toggle Function
+	$('.toggle-icon .elementor-icon').on('click', function () {
+		if (window.matchMedia("(max-width: 1024px)").matches) {
+			const $menu = $('.site-nav-main');
+			// Toggle mega menu
+			$menu.slideToggle(function () {
+				$('body').toggleClass('header-toggled', $(this).is(':visible'));
+			});
+		}
+	});
+	$('<span class="open-menu-arrow"></span>').appendTo($('.site-nav .mega-menu .mega-menu-item.mega-menu-item-has-children'));
+	// Mobile Header Sub Childs Toggle Button 
+	$(document).on('click', '.open-menu-arrow', function () {
+		$(this).parent().toggleClass('active');
+		$(this).parent().children('ul').slideToggle();
+		$(this).parent().siblings('li').children('ul').slideUp();
+		$(this).parent().siblings('li').removeClass('active');
+	});
+
+	$(window).on('elementor/frontend/init', function () {
+		// testimonial slider
+		setTimeout(function () {
+			if ($(".azb-testimonials").length) {
+				var sliderInstance = document.querySelector('.azb-testimonials .elementor-main-swiper.swiper').swiper;
+				if (sliderInstance) {
+					sliderInstance?.destroy();
+				}
+				$('.azb-testimonials .swiper-pagination, .azb-testimonials .elementor-swiper-button').wrapAll('<div class="swiper-controllers"></div>');
+				new Swiper('.azb-testimonials .elementor-main-swiper.swiper', {
+					slidesPerView: 1.001,
+					slidesPerGroup: 1,
+					spaceBetween: 16,
+					watchOverflow: true,
+					centeredSlides: true,
+					loop: true,
+					pagination: {
+						el: '.azb-testimonials .swiper-pagination',
+						type: 'bullets',
+						clickable: true,
+					},
+					navigation: {
+						nextEl: '.azb-testimonials .elementor-swiper-button-next',
+						prevEl: '.azb-testimonials .elementor-swiper-button-prev',
+					},
+					breakpoints: {
+						1024: {
+							slidesPerView: 1.001,
+							spaceBetween: 24,
+						}
+					}
+				});
+			}
+		}, 2000);
+	});
+
+
+
+}(jQuery))
+
+
+	/* * 
+	* Search Template Using Facet
+	********************************* */
+	<? php
+return [
+	"post_type" => [
+		"post",
+		"page"
+	],
+	"post_status" => [
+		"publish"
+	],
+	"posts_per_page" => 9
+];
+
+<? php 
+if (have_posts()) {
+	while (have_posts()) {
+		the_post(); ?>
+ <article <?php post_class(); ?>>
+			<div class="elementor-post__text">
+				<h3 class="elementor-post__title">
+					<a href="<?php echo get_the_permalink(); ?>">
+						<?php echo get_the_title(); ?>
+					</a>
+				</h3>
+				<?php
+				$excerpt = get_the_excerpt();
+		  if ( !empty( $excerpt ) ) : ?>
+				<div class="elementor-post__excerpt">
+					<?php echo wp_kses_post( wp_trim_words( $excerpt, 30 ) ); ?>
+				</div>
+				<?php endif; ?>
+
+
+			</div>
+ </article >
+<? php }
+
+	// Determine pagination sizes based on device type
+	$mid_size = wp_is_mobile() ? 0 : 2;
+	$end_size = 1;
+
+	// Output pagination
+	the_posts_pagination(array(
+		'prev_text' => __('<', 'barrf'),
+		'next_text' => __('>', 'barrf'),
+		'type'      => 'plain',
+		'mid_size'  => $mid_size,
+		'end_size'  => $end_size,
+		'class'     => 'pagination'
+	));
+
+	wp_reset_postdata();
+} else { ?>
+<div class="search-noresults">
+  <h3>We're sorry but there are no results for "<?php echo get_search_query(); ?>"</h3>
+  <h6>Search Suggestions:</h6>
+  <ul>
+    <li>Check your spelling</li>
+    <li>Try more general words</li>
+    <li>Try searching for similar keywords</li>
+  </ul>
+</div>
+<?php } ?>
