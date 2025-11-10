@@ -4,23 +4,87 @@
     * The Top and bottom negative margin on parent inner-header.
     ** */
 
-    body.at-top .inner-header {
-        background-color: #000;
-        position: fixed;
-        top: 0;
-        margin: 0;
-        border-radius: 0 0 20px 20px;
-        box-shadow: 0 0 4px 20px rgba(0,0,0,0.1)
-    }
+body.at-top .inner-header {
+	background-color: #000;
+	position: fixed;
+	top: 0;
+	margin: 0;
+	border-radius: 0 0 20px 20px;
+	box-shadow: 0 0 4px 20px rgba(0,0,0,0.1)
+}
 
-    body.at-top .inner-header .inner-header-inner {
-        background-color: #000 !important;
+body.at-top:has(#wpadminbar) .inner-header {
+    top: 32px;
+}
 
-    }
+body.at-top .inner-header .inner-header-inner {
+	background-color: #000 !important;
+
+}
+
+
+.homepage-slider .e-n-carousel {
+	padding: 0 !important;
+}
+
+.homepage-slider .slider-controlls {
+	position: absolute;
+/* 	left: calc(50% + 400px); */
+	background-color: white;
+	bottom: 0;
+	height: 120px;
+	z-index: 2;
+	width: 30%;
+	border-top-left-radius: 30px;
+	right: 0;
+	display: flex;
+	align-items: center
+}
+
+.homepage-slider .slider-controlls::before,
+.homepage-slider .slider-controlls::after {
+	content: '';
+	width: 30px;
+	height: 30px;
+	background-color: #fff;
+	position: absolute
+}
+
+.homepage-slider .slider-controlls::before {
+	left: -30px;
+	bottom: 0;
+	background-color: white
+}
+
+.homepage-slider .slider-controlls::after {
+	right: 0;
+	top: -30px;
+}
+
+
+
+.homepage-slider .slider-controlls::before,
+.homepage-slider .slider-controlls::after {
+  content: '';
+  position: absolute;
+    background: radial-gradient(circle at 0% 0%, transparent 70%, white 72%);
+}
+
+
 
 </style>
 
 <script>
+
+// Inside the Ready
+var $controls = $('.homepage-slider .elementor-swiper-button-prev, .homepage-slider .elementor-swiper-button-next, .homepage-slider .swiper-pagination');
+
+    if ($controls.length) {
+        $controls.wrapAll('<div class="slider-controlls"></div>');
+    }
+
+
+
     $(function() {
         var $target = $('.inner-header');
         if (!$target.length) return;
@@ -42,3 +106,5 @@
         checkElementPosition(); // run once on load
     });
 </script>
+
+
