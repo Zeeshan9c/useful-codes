@@ -1,0 +1,44 @@
+<style>
+
+    /*
+    * The Top and bottom negative margin on parent inner-header.
+    ** */
+
+    body.at-top .inner-header {
+        background-color: #000;
+        position: fixed;
+        top: 0;
+        margin: 0;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 0 4px 20px rgba(0,0,0,0.1)
+    }
+
+    body.at-top .inner-header .inner-header-inner {
+        background-color: #000 !important;
+
+    }
+
+</style>
+
+<script>
+    $(function() {
+        var $target = $('.inner-header');
+        if (!$target.length) return;
+
+        var adminbar = $('#wpadminbar').length ? $('#wpadminbar').height() : 0;
+        var elementTop = $target.offset().top - adminbar;
+
+        function checkElementPosition() {
+            var scrollTop = $(window).scrollTop();
+
+            if (scrollTop >= elementTop) {
+            $('body').addClass('at-top');
+            } else {
+            $('body').removeClass('at-top');
+            }
+        }
+
+        $(window).on('scroll', checkElementPosition);
+        checkElementPosition(); // run once on load
+    });
+</script>
