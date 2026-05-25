@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "block-child-textdomain/card-block",
+  "version": "1.0.0",
+  "title": "Card Block",
+  "category": "design",
+  "icon": "layout",
+  "description": "A base card block. Extend with additional attributes and inner content as needed.",
+  "textdomain": "block-child-textdomain",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "viewScript": "file:./view.js",
+  "supports": {
+    "html": false,
+    "align": false,
+    "color": {
+      "background": true,
+      "text": true
+    },
+    "spacing": {
+      "padding": true,
+      "margin": true,
+      "blockGap": true
+    }
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": ""
+    }
+  }
+}
